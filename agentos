@@ -41,7 +41,7 @@ update|atualizar)
 ;;
 
 backup)
-  bash "$BASE/modules/backup_manager.sh"
+  bash "$BASE/modules/backup.sh"
 ;;
 
 restore)
@@ -63,6 +63,10 @@ db|banco)
 version|versao)
   source "$BASE/configs/config.conf"
   echo "AgentOS Núcleo v$VERSION"
+;;
+
+info)
+  bash "$BASE/modules/info.sh"
 ;;
 
 *)
