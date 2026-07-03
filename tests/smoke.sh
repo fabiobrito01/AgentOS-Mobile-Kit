@@ -14,6 +14,7 @@ required=(
   "$ROOT/modules/termux.sh"
   "$ROOT/modules/packages.sh"
   "$ROOT/modules/github.sh"
+  "$ROOT/modules/audit.sh"
   "$ROOT/modules/projects.sh"
   "$ROOT/modules/device.sh"
   "$ROOT/modules/assistant.sh"

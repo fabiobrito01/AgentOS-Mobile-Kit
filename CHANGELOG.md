@@ -1,5 +1,13 @@
 # Changelog
 
+## 2.3.0
+
+- Adicionada tela Auditoria GitHub e Catalogo Turbo.
+- Auditoria lista repositorios via GitHub CLI, classifica e exporta relatorio Markdown.
+- Catalogo Turbo inclui repos selecionados para IA local, agentes, automacao, dados, mobile e DevOps.
+- Adicionadas acoes para clonar ou forkar repos escolhidos do catalogo.
+- Relatorios e catalogos ficam em `Download/AgentOS`.
+
 ## 2.2.0
 
 - Adicionada Central de Pacotes por categoria.

@@ -14,6 +14,8 @@ O objetivo do AgentOS Mobile Kit e simples: abrir uma tela organizada no Termux,
 - Ajuda a autenticar o GitHub CLI.
 - Pesquisa repositorios no GitHub por area, tecnologia ou ideia.
 - Salva favoritos e historico de buscas do GitHub.
+- Audita seus repositorios do GitHub e gera relatorio.
+- Traz Catalogo Turbo com repos fortes para IA, automacao, agentes, mobile e dados.
 - Clona repositorios para o celular.
 - Faz fork de repositorios para seu GitHub e clona em seguida.
 - Cria repositorios no seu GitHub a partir de uma pasta local.
@@ -56,13 +58,14 @@ Isso abre a central com menus:
 1. Preparar / atualizar Termux
 2. Central de pacotes
 3. GitHub Explorer
-4. Projetos e trabalho
-5. Meu celular / Termux
-6. Assistente de comandos
-7. Backup e restauracao
-8. Configuracoes
-9. Diagnostico
-10. Ajuda e comandos
+4. Auditoria GitHub e Catalogo Turbo
+5. Projetos e trabalho
+6. Meu celular / Termux
+7. Assistente de comandos
+8. Backup e restauracao
+9. Configuracoes
+10. Diagnostico
+11. Ajuda e comandos
 
 ## Estrutura
 
@@ -95,6 +98,7 @@ agentos                  # abre o menu
 agentos atualizar         # atualiza Termux e instala ferramentas
 agentos pacotes           # central de pacotes
 agentos github            # abre GitHub Explorer
+agentos auditoria         # auditoria GitHub e catalogo turbo
 agentos projetos          # abre menu de projetos e trabalho
 agentos trabalho          # atalho para o mesmo menu
 agentos celular           # informacoes e manutencao segura
@@ -128,7 +132,7 @@ gh auth status
 
 ## Status
 
-Versao atual: `2.2.0`
+Versao atual: `2.3.0`
 
 Esta versao substitui a estrutura antiga por uma base mais limpa, direta e organizada para uso real no Termux.
 

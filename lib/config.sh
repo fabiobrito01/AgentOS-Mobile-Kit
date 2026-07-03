@@ -27,6 +27,8 @@ agentos_load_config() {
   AGENTOS_EXPORTS_DIR="${AGENTOS_EXPORTS_DIR:-$AGENTOS_PUBLIC_ROOT/Exportacoes}"
   AGENTOS_FAVORITES_FILE="${AGENTOS_FAVORITES_FILE:-$AGENTOS_PUBLIC_ROOT/Favoritos/github_favoritos.tsv}"
   AGENTOS_HISTORY_FILE="${AGENTOS_HISTORY_FILE:-$AGENTOS_PUBLIC_ROOT/Historico/buscas_github.tsv}"
+  AGENTOS_AUDIT_DIR="${AGENTOS_AUDIT_DIR:-$AGENTOS_PUBLIC_ROOT/AuditoriaGitHub}"
+  AGENTOS_CATALOG_FILE="${AGENTOS_CATALOG_FILE:-$AGENTOS_PUBLIC_ROOT/Catalogos/repos_turbo.tsv}"
   AGENTOS_DEFAULT_SEARCH_LIMIT="${AGENTOS_DEFAULT_SEARCH_LIMIT:-20}"
   AGENTOS_DEFAULT_BRANCH="${AGENTOS_DEFAULT_BRANCH:-main}"
 }
@@ -54,8 +56,10 @@ agentos_init_dirs() {
       "$AGENTOS_GITHUB_DIR" \
       "$AGENTOS_BACKUP_DIR" \
       "$AGENTOS_EXPORTS_DIR" \
+      "$AGENTOS_AUDIT_DIR" \
       "$(dirname "$AGENTOS_FAVORITES_FILE")" \
-      "$(dirname "$AGENTOS_HISTORY_FILE")"
+      "$(dirname "$AGENTOS_HISTORY_FILE")" \
+      "$(dirname "$AGENTOS_CATALOG_FILE")"
   fi
 }
 
@@ -67,8 +71,10 @@ agentos_require_storage() {
       "$AGENTOS_GITHUB_DIR" \
       "$AGENTOS_BACKUP_DIR" \
       "$AGENTOS_EXPORTS_DIR" \
+      "$AGENTOS_AUDIT_DIR" \
       "$(dirname "$AGENTOS_FAVORITES_FILE")" \
-      "$(dirname "$AGENTOS_HISTORY_FILE")"
+      "$(dirname "$AGENTOS_HISTORY_FILE")" \
+      "$(dirname "$AGENTOS_CATALOG_FILE")"
     return 0
   fi
 
@@ -86,6 +92,8 @@ agentos_reset_public_dirs() {
   AGENTOS_EXPORTS_DIR="$AGENTOS_PUBLIC_ROOT/Exportacoes"
   AGENTOS_FAVORITES_FILE="$AGENTOS_PUBLIC_ROOT/Favoritos/github_favoritos.tsv"
   AGENTOS_HISTORY_FILE="$AGENTOS_PUBLIC_ROOT/Historico/buscas_github.tsv"
+  AGENTOS_AUDIT_DIR="$AGENTOS_PUBLIC_ROOT/AuditoriaGitHub"
+  AGENTOS_CATALOG_FILE="$AGENTOS_PUBLIC_ROOT/Catalogos/repos_turbo.tsv"
 }
 
 agentos_public_dirs_report() {
@@ -96,6 +104,8 @@ agentos_public_dirs_report() {
   printf "Exportacoes....: %s\n" "$AGENTOS_EXPORTS_DIR"
   printf "Favoritos......: %s\n" "$AGENTOS_FAVORITES_FILE"
   printf "Historico......: %s\n" "$AGENTOS_HISTORY_FILE"
+  printf "Auditoria......: %s\n" "$AGENTOS_AUDIT_DIR"
+  printf "Catalogo.......: %s\n" "$AGENTOS_CATALOG_FILE"
 }
 
 agentos_write_user_config() {
@@ -108,6 +118,8 @@ AGENTOS_EXPORTS_DIR="$AGENTOS_EXPORTS_DIR"
 AGENTOS_PUBLIC_ROOT="$AGENTOS_PUBLIC_ROOT"
 AGENTOS_FAVORITES_FILE="$AGENTOS_FAVORITES_FILE"
 AGENTOS_HISTORY_FILE="$AGENTOS_HISTORY_FILE"
+AGENTOS_AUDIT_DIR="$AGENTOS_AUDIT_DIR"
+AGENTOS_CATALOG_FILE="$AGENTOS_CATALOG_FILE"
 AGENTOS_DEFAULT_SEARCH_LIMIT="$AGENTOS_DEFAULT_SEARCH_LIMIT"
 AGENTOS_DEFAULT_BRANCH="$AGENTOS_DEFAULT_BRANCH"
 EOF

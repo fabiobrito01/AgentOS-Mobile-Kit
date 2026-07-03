@@ -24,6 +24,14 @@ agentos github
 
 Abre o menu para pesquisar, clonar e fazer fork de repositorios.
 
+## Auditoria GitHub
+
+```bash
+agentos auditoria
+```
+
+Lista seus repositorios, classifica, exporta relatorio e abre o Catalogo Turbo de repositorios recomendados.
+
 ## Pacotes
 
 ```bash

@@ -16,6 +16,9 @@ agentos pacotes
 agentos github
   Abre o GitHub Explorer.
 
+agentos auditoria
+  Audita seus repositorios e abre o Catalogo Turbo.
+
 agentos projetos
   Abre ferramentas para projetos locais.
 
