@@ -1,0 +1,12 @@
+backups/
+logs/
+temporarios/
+workspace/
+exportacoes/
+*.db
+*.sqlite
+*.log
+*.tar.gz
+.env
+id_rsa
+id_ed25519

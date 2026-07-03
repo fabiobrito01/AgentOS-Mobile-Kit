@@ -1,0 +1,77 @@
+#!/data/data/com.termux/files/usr/bin/bash
+
+BASE="$HOME/AgentOS-Mobile-Kit"
+
+case "$1" in
+
+menu|"")
+  bash "$BASE/agentos.sh"
+;;
+
+preparar)
+  bash "$BASE/modules/preparar.sh"
+;;
+
+instalar)
+    bash "$BASE/modules/instalar.sh"
+;;
+
+iniciar)
+  bash "$BASE/modules/iniciar.sh"
+;;
+
+finalizar)
+  bash "$BASE/modules/finalizar.sh"
+;;
+
+restaurar)
+  bash "$BASE/modules/restaurar.sh"
+;;
+
+ajuda|help)
+  bash "$BASE/modules/ajuda.sh"
+;;
+
+doctor|diagnostico)
+  bash "$BASE/doctor.sh"
+;;
+
+update|atualizar)
+  bash "$BASE/modules/update_manager.sh"
+;;
+
+backup)
+  bash "$BASE/modules/backup_manager.sh"
+;;
+
+restore)
+  bash "$BASE/restore.sh"
+;;
+
+github)
+  bash "$BASE/github/github_explorer_v1.sh"
+;;
+
+plugin|plugins)
+  bash "$BASE/modules/plugin_manager.sh"
+;;
+
+db|banco)
+  sqlite3 "$BASE/database/agentos.db"
+;;
+
+version|versao)
+  source "$BASE/configs/config.conf"
+  echo "AgentOS Núcleo v$VERSION"
+;;
+
+*)
+  echo
+  echo "Comando não reconhecido."
+  echo
+  echo "Use:"
+  echo "  agentos ajuda"
+  echo
+;;
+
+esac
