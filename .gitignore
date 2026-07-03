@@ -1,0 +1,16 @@
+backups/
+data/
+logs/
+tmp/
+workspace/
+downloads/
+*.db
+*.sqlite
+*.log
+*.tar.gz
+*.zip
+.env
+id_rsa
+id_ed25519
+known_hosts
+criar_repo.json

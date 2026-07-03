@@ -1,0 +1,61 @@
+#!/data/data/com.termux/files/usr/bin/bash
+
+AGENTOS_HOME="${AGENTOS_HOME:-$HOME/AgentOS-Mobile-Kit}"
+AGENTOS_CONFIG_FILE="$AGENTOS_HOME/configs/agentos.conf"
+AGENTOS_DEFAULT_CONFIG="$AGENTOS_HOME/configs/default.conf"
+AGENTOS_DATA_DIR="$AGENTOS_HOME/data"
+AGENTOS_LOG_DIR="$AGENTOS_HOME/logs"
+AGENTOS_TMP_DIR="$AGENTOS_HOME/tmp"
+AGENTOS_DOWNLOAD_DIR="$AGENTOS_HOME/downloads"
+AGENTOS_WORKSPACE_DIR="$AGENTOS_HOME/workspace"
+
+agentos_load_config() {
+  if [ -f "$AGENTOS_DEFAULT_CONFIG" ]; then
+    # shellcheck disable=SC1090
+    source "$AGENTOS_DEFAULT_CONFIG"
+  fi
+
+  if [ -f "$AGENTOS_CONFIG_FILE" ]; then
+    # shellcheck disable=SC1090
+    source "$AGENTOS_CONFIG_FILE"
+  fi
+
+  AGENTOS_PROJECTS_DIR="${AGENTOS_PROJECTS_DIR:-$HOME/Projetos}"
+  AGENTOS_GITHUB_DIR="${AGENTOS_GITHUB_DIR:-$HOME/GitHub}"
+  AGENTOS_BACKUP_DIR="${AGENTOS_BACKUP_DIR:-$HOME/AgentOS_Backups}"
+  AGENTOS_DEFAULT_SEARCH_LIMIT="${AGENTOS_DEFAULT_SEARCH_LIMIT:-20}"
+  AGENTOS_DEFAULT_BRANCH="${AGENTOS_DEFAULT_BRANCH:-main}"
+}
+
+agentos_init_dirs() {
+  mkdir -p \
+    "$AGENTOS_HOME" \
+    "$AGENTOS_HOME/configs" \
+    "$AGENTOS_HOME/lib" \
+    "$AGENTOS_HOME/modules" \
+    "$AGENTOS_HOME/docs" \
+    "$AGENTOS_DATA_DIR" \
+    "$AGENTOS_LOG_DIR" \
+    "$AGENTOS_TMP_DIR" \
+    "$AGENTOS_DOWNLOAD_DIR" \
+    "$AGENTOS_WORKSPACE_DIR" \
+    "$AGENTOS_PROJECTS_DIR" \
+    "$AGENTOS_GITHUB_DIR" \
+    "$AGENTOS_BACKUP_DIR"
+}
+
+agentos_write_user_config() {
+  mkdir -p "$AGENTOS_HOME/configs"
+  cat > "$AGENTOS_CONFIG_FILE" <<EOF
+AGENTOS_PROJECTS_DIR="$AGENTOS_PROJECTS_DIR"
+AGENTOS_GITHUB_DIR="$AGENTOS_GITHUB_DIR"
+AGENTOS_BACKUP_DIR="$AGENTOS_BACKUP_DIR"
+AGENTOS_DEFAULT_SEARCH_LIMIT="$AGENTOS_DEFAULT_SEARCH_LIMIT"
+AGENTOS_DEFAULT_BRANCH="$AGENTOS_DEFAULT_BRANCH"
+EOF
+}
+
+agentos_log() {
+  mkdir -p "$AGENTOS_LOG_DIR"
+  printf "%s | %s\n" "$(date '+%Y-%m-%d %H:%M:%S')" "$*" >> "$AGENTOS_LOG_DIR/agentos.log"
+}

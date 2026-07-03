@@ -1,0 +1,7 @@
+* text=auto
+*.sh text eol=lf
+agentos text eol=lf
+instalar.sh text eol=lf
+VERSION text eol=lf
+*.md text eol=lf
+*.conf text eol=lf

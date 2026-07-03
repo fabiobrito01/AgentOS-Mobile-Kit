@@ -1,0 +1,66 @@
+#!/data/data/com.termux/files/usr/bin/bash
+
+AGENTOS_HOME="${AGENTOS_HOME:-$HOME/AgentOS-Mobile-Kit}"
+
+source "$AGENTOS_HOME/lib/ui.sh"
+source "$AGENTOS_HOME/lib/config.sh"
+source "$AGENTOS_HOME/lib/system.sh"
+source "$AGENTOS_HOME/lib/github.sh"
+
+source "$AGENTOS_HOME/modules/termux.sh"
+source "$AGENTOS_HOME/modules/github.sh"
+source "$AGENTOS_HOME/modules/projects.sh"
+source "$AGENTOS_HOME/modules/backup.sh"
+source "$AGENTOS_HOME/modules/settings.sh"
+source "$AGENTOS_HOME/modules/doctor.sh"
+source "$AGENTOS_HOME/modules/help.sh"
+
+agentos_load_config
+agentos_init_dirs
+
+main_menu() {
+  while true; do
+    ui_title
+    ui_menu_item "1" "Preparar / atualizar Termux"
+    ui_menu_item "2" "GitHub Explorer"
+    ui_menu_item "3" "Projetos locais"
+    ui_menu_item "4" "Backup e restauracao"
+    ui_menu_item "5" "Configuracoes"
+    ui_menu_item "6" "Diagnostico"
+    ui_menu_item "7" "Ajuda e comandos"
+    ui_menu_item "0" "Sair"
+    printf "\n"
+    read -r -p "Escolha: " op
+
+    case "$op" in
+      1) menu_termux ;;
+      2) menu_github ;;
+      3) menu_projects ;;
+      4) menu_backup ;;
+      5) menu_settings ;;
+      6) agentos_doctor; ui_pause ;;
+      7) agentos_help; ui_pause ;;
+      0) agentos_log "Sessao encerrada"; exit 0 ;;
+      *) ui_warn "Opcao invalida."; sleep 1 ;;
+    esac
+  done
+}
+
+case "${1:-menu}" in
+  menu|iniciar) main_menu ;;
+  instalar|setup) menu_termux ;;
+  atualizar|update|termux) termux_full_update ;;
+  github) menu_github ;;
+  projetos|projects) menu_projects ;;
+  backup) backup_create ;;
+  restore|restaurar) backup_restore_latest ;;
+  config|configs) menu_settings ;;
+  doctor|diagnostico|verificar) agentos_doctor ;;
+  help|ajuda|-h|--help) agentos_help ;;
+  version|versao|--version) cat "$AGENTOS_HOME/VERSION" ;;
+  *)
+    ui_error "Comando nao reconhecido: $1"
+    printf "Use: agentos ajuda\n"
+    exit 1
+    ;;
+esac
