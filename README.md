@@ -9,6 +9,7 @@ O objetivo do AgentOS Mobile Kit e simples: abrir uma tela organizada no Termux,
 - Atualiza o Termux.
 - Instala ferramentas essenciais: Git, Curl, Wget, GitHub CLI, OpenSSH, JQ, Python, Node.js, Zip, Tar e utilitarios.
 - Configura pastas padrao para projetos.
+- Salva projetos, clones, backups e exportacoes dentro de `Download/AgentOS`, para voce acessar pelo gerenciador de arquivos do celular.
 - Ajuda a autenticar o GitHub CLI.
 - Pesquisa repositorios no GitHub por area, tecnologia ou ideia.
 - Clona repositorios para o celular.
@@ -50,7 +51,7 @@ Isso abre a central com menus:
 
 1. Preparar / atualizar Termux
 2. GitHub Explorer
-3. Projetos locais
+3. Projetos e trabalho
 4. Backup e restauracao
 5. Configuracoes
 6. Diagnostico
@@ -73,10 +74,11 @@ AgentOS-Mobile-Kit/
 Pastas criadas no Termux:
 
 ```text
-~/AgentOS-Mobile-Kit      Instalacao do AgentOS
-~/Projetos                Projetos pessoais
-~/GitHub                  Repositorios clonados
-~/AgentOS_Backups         Backups do AgentOS
+~/AgentOS-Mobile-Kit                    Instalacao do AgentOS
+~/storage/downloads/AgentOS/Projetos    Projetos pessoais
+~/storage/downloads/AgentOS/GitHub      Repositorios clonados
+~/storage/downloads/AgentOS/Backups     Backups
+~/storage/downloads/AgentOS/Exportacoes Relatorios e arquivos ZIP
 ```
 
 ## Comandos diretos
@@ -85,7 +87,8 @@ Pastas criadas no Termux:
 agentos                  # abre o menu
 agentos atualizar         # atualiza Termux e instala ferramentas
 agentos github            # abre GitHub Explorer
-agentos projetos          # abre menu de projetos locais
+agentos projetos          # abre menu de projetos e trabalho
+agentos trabalho          # atalho para o mesmo menu
 agentos backup            # cria backup
 agentos doctor            # diagnostico
 agentos config            # configuracoes
@@ -112,6 +115,18 @@ gh auth status
 
 ## Status
 
-Versao atual: `2.0.0`
+Versao atual: `2.1.0`
 
 Esta versao substitui a estrutura antiga por uma base mais limpa, direta e organizada para uso real no Termux.
+
+## Projeto publico e seguranca
+
+O projeto pode ser publico. Ele nao deve guardar tokens, senhas, chaves SSH, arquivos `.env`, bancos locais, backups ou logs. Esses itens estao no `.gitignore`.
+
+Use o GitHub CLI para login:
+
+```bash
+gh auth login
+```
+
+Nunca coloque token dentro dos scripts.

@@ -3,16 +3,12 @@
 backup_create() {
   ui_title
   ui_section "Backup"
+  agentos_require_storage || return 1
   mkdir -p "$AGENTOS_BACKUP_DIR"
 
   local file="$AGENTOS_BACKUP_DIR/agentos_backup_$(date +%Y%m%d_%H%M%S).tar.gz"
 
-  tar -czf "$file" \
-    -C "$HOME" \
-    "AgentOS-Mobile-Kit/configs" \
-    "AgentOS-Mobile-Kit/data" \
-    "AgentOS-Mobile-Kit/logs" \
-    2>/dev/null
+  tar -czf "$file" -C "$AGENTOS_HOME" configs data logs 2>/dev/null
 
   ui_ok "Backup criado: $file"
 }
@@ -22,6 +18,7 @@ backup_restore_latest() {
   ui_section "Restauracao"
 
   local file
+  agentos_require_storage || return 1
   file="$(ls -t "$AGENTOS_BACKUP_DIR"/agentos_backup_*.tar.gz 2>/dev/null | head -n 1)"
 
   if [ -z "$file" ]; then
@@ -34,13 +31,14 @@ backup_restore_latest() {
     return 0
   fi
 
-  tar -xzf "$file" -C "$HOME"
+  tar -xzf "$file" -C "$AGENTOS_HOME"
   ui_ok "Backup restaurado."
 }
 
 backup_list() {
   ui_title
   ui_section "Backups disponiveis"
+  agentos_require_storage || return 1
   ls -lh "$AGENTOS_BACKUP_DIR"/agentos_backup_*.tar.gz 2>/dev/null || ui_warn "Nenhum backup encontrado."
 }
 

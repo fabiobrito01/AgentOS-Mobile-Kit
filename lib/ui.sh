@@ -62,13 +62,29 @@ ui_info() {
 
 ui_pause() {
   printf "\n"
-  read -r -p "Pressione ENTER para continuar..."
+  read -r -p "Pressione ENTER para voltar..."
 }
 
 ui_prompt() {
   local label="$1"
   local value
   read -r -p "$label: " value
+  printf "%s" "$value"
+}
+
+ui_prompt_back() {
+  local label="$1"
+  local value
+  read -r -p "$label (0 para voltar): " value
+  [ "$value" = "0" ] && return 1
+  printf "%s" "$value"
+}
+
+ui_choose() {
+  local label="$1"
+  local value
+  read -r -p "$label [0 voltar]: " value
+  [ "$value" = "0" ] && return 1
   printf "%s" "$value"
 }
 

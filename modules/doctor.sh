@@ -7,6 +7,7 @@ agentos_doctor() {
   local errors=0
 
   printf "Home AgentOS....: %s\n" "$AGENTOS_HOME"
+  printf "Download Android: %s\n" "$AGENTOS_TERMUX_DOWNLOADS"
   printf "Usuario.........: %s\n" "$(whoami 2>/dev/null || printf desconhecido)"
   printf "Sistema.........: %s\n" "$(uname -a 2>/dev/null || printf desconhecido)"
   printf "Data............: %s\n" "$(date)"
@@ -22,7 +23,7 @@ agentos_doctor() {
   done
 
   ui_section "Pastas"
-  for dir in "$AGENTOS_HOME" "$AGENTOS_PROJECTS_DIR" "$AGENTOS_GITHUB_DIR" "$AGENTOS_BACKUP_DIR" "$AGENTOS_DATA_DIR" "$AGENTOS_LOG_DIR"; do
+  for dir in "$AGENTOS_HOME" "$AGENTOS_DATA_DIR" "$AGENTOS_LOG_DIR"; do
     if [ -d "$dir" ]; then
       ui_ok "$dir"
     else
@@ -30,6 +31,21 @@ agentos_doctor() {
       errors=$((errors + 1))
     fi
   done
+
+  if agentos_storage_ready; then
+    ui_ok "$AGENTOS_TERMUX_DOWNLOADS"
+    for dir in "$AGENTOS_PUBLIC_ROOT" "$AGENTOS_PROJECTS_DIR" "$AGENTOS_GITHUB_DIR" "$AGENTOS_BACKUP_DIR" "$AGENTOS_EXPORTS_DIR"; do
+      if [ -d "$dir" ]; then
+        ui_ok "$dir"
+      else
+        ui_error "$dir"
+        errors=$((errors + 1))
+      fi
+    done
+  else
+    ui_error "$AGENTOS_TERMUX_DOWNLOADS nao acessivel"
+    errors=$((errors + 1))
+  fi
 
   ui_section "GitHub"
   if github_auth_status; then

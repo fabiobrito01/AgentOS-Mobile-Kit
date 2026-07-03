@@ -21,6 +21,7 @@ termux_setup_storage() {
   if cmd_exists termux-setup-storage; then
     termux-setup-storage
     ui_ok "Permissao solicitada. Confirme no Android se aparecer a janela."
+    ui_info "Depois rode: agentos config -> Criar/ajustar pastas no Download"
   else
     ui_warn "termux-setup-storage nao encontrado. Execute isso dentro do Termux."
   fi
@@ -32,8 +33,8 @@ termux_configure_git() {
   local name
   local email
 
-  name="$(ui_prompt "Nome para commits")"
-  email="$(ui_prompt "Email do GitHub")"
+  name="$(ui_prompt_back "Nome para commits")" || return 0
+  email="$(ui_prompt_back "Email do GitHub")" || return 0
 
   git config --global user.name "$name"
   git config --global user.email "$email"

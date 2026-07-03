@@ -34,9 +34,13 @@ modules/help.sh       Ajuda
 ## Dados locais
 
 ```text
-data/github_last_search.json   Ultima resposta bruta do GitHub
-data/github_last_search.tsv    Ultima busca em formato simples
-logs/agentos.log               Registro basico de sessoes
+data/github_last_search.json                   Ultima resposta bruta do GitHub
+data/github_last_search.tsv                    Ultima busca em formato simples
+logs/agentos.log                               Registro basico de sessoes
+~/storage/downloads/AgentOS/Projetos           Projetos criados pelo usuario
+~/storage/downloads/AgentOS/GitHub             Repositorios clonados
+~/storage/downloads/AgentOS/Backups            Backups
+~/storage/downloads/AgentOS/Exportacoes        Relatorios e ZIPs
 ```
 
 Essas pastas entram no `.gitignore`, porque sao dados do usuario.

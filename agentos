@@ -23,7 +23,7 @@ main_menu() {
     ui_title
     ui_menu_item "1" "Preparar / atualizar Termux"
     ui_menu_item "2" "GitHub Explorer"
-    ui_menu_item "3" "Projetos locais"
+    ui_menu_item "3" "Projetos e trabalho"
     ui_menu_item "4" "Backup e restauracao"
     ui_menu_item "5" "Configuracoes"
     ui_menu_item "6" "Diagnostico"
@@ -51,7 +51,7 @@ case "${1:-menu}" in
   instalar|setup) menu_termux ;;
   atualizar|update|termux) termux_full_update ;;
   github) menu_github ;;
-  projetos|projects) menu_projects ;;
+  projetos|projects|trabalho|work) menu_projects ;;
   backup) backup_create ;;
   restore|restaurar) backup_restore_latest ;;
   config|configs) menu_settings ;;

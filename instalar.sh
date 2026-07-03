@@ -22,7 +22,13 @@ printf "[2/6] Instalando dependencias essenciais...\n"
 pkg install -y git curl wget gh openssh jq tar zip unzip nano vim tree rsync python nodejs
 
 printf "[3/6] Preparando pastas...\n"
-mkdir -p "$TARGET_DIR" "$HOME/Projetos" "$HOME/GitHub" "$HOME/AgentOS_Backups"
+mkdir -p "$TARGET_DIR"
+
+if command -v termux-setup-storage >/dev/null 2>&1; then
+  printf "Solicitando acesso ao armazenamento do Android...\n"
+  termux-setup-storage || true
+  printf "Se o Android pedir permissao, aceite. Se necessario, rode o instalador novamente depois.\n"
+fi
 
 printf "[4/6] Copiando AgentOS...\n"
 if [ "$PROJECT_DIR" != "$TARGET_DIR" ]; then
@@ -44,5 +50,6 @@ AGENTOS_HOME="$TARGET_DIR" "$TARGET_DIR/agentos" doctor >/dev/null 2>&1 || true
 printf "\n\033[32mInstalacao concluida.\033[0m\n\n"
 printf "Proximos passos:\n"
 printf "  agentos\n"
+printf "  agentos config\n"
 printf "  agentos atualizar\n"
 printf "  gh auth login\n\n"

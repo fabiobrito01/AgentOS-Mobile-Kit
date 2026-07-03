@@ -1,5 +1,13 @@
 # Changelog
 
+## 2.1.0
+
+- Pastas de trabalho movidas para `~/storage/downloads/AgentOS`.
+- Configuracoes ampliadas com preparo do Download, identidade Git e relatorio exportavel.
+- Tela de projetos ampliada para criar projetos do zero com modelos.
+- Prompts internos passaram a aceitar `0` para voltar/cancelar.
+- Adicionada documentacao de seguranca para uso publico do repositorio.
+
 ## 2.0.0
 
 - Projeto refeito como central real para Termux.

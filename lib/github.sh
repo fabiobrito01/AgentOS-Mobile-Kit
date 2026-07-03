@@ -92,6 +92,8 @@ github_clone_result() {
   local index="$1"
   local clone_url
   local name
+  agentos_require_storage || return 1
+
   clone_url="$(github_pick_result_field "$index" 5)"
 
   if [ -z "$clone_url" ]; then
@@ -113,6 +115,8 @@ github_clone_result() {
 github_fork_result() {
   local index="$1"
   local full_name
+  agentos_require_storage || return 1
+
   full_name="$(github_pick_result_field "$index" 1)"
 
   if [ -z "$full_name" ]; then

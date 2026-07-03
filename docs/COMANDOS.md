@@ -30,7 +30,13 @@ Abre o menu para pesquisar, clonar e fazer fork de repositorios.
 agentos projetos
 ```
 
-Abre o menu para gerenciar pastas locais, atualizar repositorios, enviar commits e criar repositorios no GitHub.
+Abre o menu para criar projetos do zero, gerenciar pastas locais, atualizar repositorios, enviar commits, exportar ZIP e criar repositorios no GitHub.
+
+```bash
+agentos trabalho
+```
+
+Atalho para o mesmo menu.
 
 ## Backup
 

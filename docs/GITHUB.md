@@ -49,7 +49,7 @@ Depois da busca:
 O projeto sera clonado em:
 
 ```text
-~/GitHub
+~/storage/downloads/AgentOS/GitHub
 ```
 
 ## Fazer fork e clonar

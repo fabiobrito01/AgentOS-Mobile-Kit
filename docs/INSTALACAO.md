@@ -21,13 +21,14 @@ agentos
 
 1. Atualiza o Termux.
 2. Instala ferramentas essenciais.
-3. Cria pastas padrao:
-   - `~/AgentOS-Mobile-Kit`
-   - `~/Projetos`
-   - `~/GitHub`
-   - `~/AgentOS_Backups`
-4. Instala o comando global `agentos`.
-5. Ajusta permissao dos scripts.
+3. Solicita permissao de armazenamento com `termux-setup-storage`.
+4. Cria pastas padrao dentro do Download:
+   - `~/storage/downloads/AgentOS/Projetos`
+   - `~/storage/downloads/AgentOS/GitHub`
+   - `~/storage/downloads/AgentOS/Backups`
+   - `~/storage/downloads/AgentOS/Exportacoes`
+5. Instala o comando global `agentos`.
+6. Ajusta permissao dos scripts.
 
 ## Autenticar GitHub
 

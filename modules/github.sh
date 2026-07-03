@@ -18,8 +18,8 @@ menu_github() {
       1)
         local query
         local limit
-        query="$(ui_prompt "Pesquisar por area, tecnologia ou ideia")"
-        limit="$(ui_prompt "Quantidade de resultados [$AGENTOS_DEFAULT_SEARCH_LIMIT]")"
+        query="$(ui_prompt_back "Pesquisar por area, tecnologia ou ideia")" || continue
+        limit="$(ui_prompt_back "Quantidade de resultados [$AGENTOS_DEFAULT_SEARCH_LIMIT]")" || continue
         github_search_repositories "$query" "${limit:-$AGENTOS_DEFAULT_SEARCH_LIMIT}"
         ui_pause
         ;;
@@ -30,13 +30,13 @@ menu_github() {
         ;;
       3)
         local index
-        index="$(ui_prompt "Numero do resultado para clonar")"
+        index="$(ui_prompt_back "Numero do resultado para clonar")" || continue
         github_clone_result "$index"
         ui_pause
         ;;
       4)
         local index
-        index="$(ui_prompt "Numero do resultado para fork+clone")"
+        index="$(ui_prompt_back "Numero do resultado para fork+clone")" || continue
         github_fork_result "$index"
         ui_pause
         ;;
@@ -50,7 +50,7 @@ menu_github() {
         ;;
       6)
         local index
-        index="$(ui_prompt "Numero do resultado")"
+        index="$(ui_prompt_back "Numero do resultado")" || continue
         github_open_result_url "$index"
         ui_pause
         ;;
