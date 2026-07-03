@@ -18,7 +18,7 @@ run_step() {
 
 termux_install_packages() {
   pkg update -y && pkg upgrade -y
-  pkg install -y git curl wget gh openssh jq tar zip unzip nano vim tree rsync python nodejs
+  pkg install -y git curl wget gh openssh jq tar zip unzip nano vim tree rsync python nodejs ripgrep fzf htop tmux sqlite
 }
 
 show_command_version() {
@@ -39,4 +39,22 @@ safe_cd() {
     ui_error "Nao foi possivel entrar em: $1"
     return 1
   }
+}
+
+pkg_install_group() {
+  local label="$1"
+  shift
+  ui_section "$label"
+  printf "Pacotes: %s\n\n" "$*"
+  if ui_confirm "Instalar/atualizar este grupo"; then
+    pkg install -y "$@"
+  fi
+}
+
+command_preview() {
+  ui_section "Comando sugerido"
+  printf "%s\n" "$1"
+  if ui_confirm "Executar agora"; then
+    eval "$1"
+  fi
 }

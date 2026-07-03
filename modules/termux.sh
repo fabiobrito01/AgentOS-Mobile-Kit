@@ -11,7 +11,7 @@ termux_full_update() {
 
   run_step "Atualizando bibliotecas do Termux" pkg update -y
   run_step "Atualizando pacotes instalados" pkg upgrade -y
-  run_step "Instalando ferramentas essenciais" pkg install -y git curl wget gh openssh jq tar zip unzip nano vim tree rsync python nodejs
+  run_step "Instalando ferramentas essenciais" pkg install -y git curl wget gh openssh jq tar zip unzip nano vim tree rsync python nodejs ripgrep fzf htop tmux sqlite less
   agentos_log "Termux atualizado"
 }
 
@@ -54,6 +54,7 @@ menu_termux() {
     ui_menu_item "3" "Configurar nome/email do Git"
     ui_menu_item "4" "Login no GitHub CLI"
     ui_menu_item "5" "Ver versoes instaladas"
+    ui_menu_item "6" "Abrir central de pacotes"
     ui_menu_item "0" "Voltar"
     printf "\n"
     read -r -p "Escolha: " op
@@ -64,6 +65,7 @@ menu_termux() {
       3) termux_configure_git; ui_pause ;;
       4) github_login; ui_pause ;;
       5) agentos_doctor; ui_pause ;;
+      6) menu_packages ;;
       0) return 0 ;;
       *) ui_warn "Opcao invalida."; sleep 1 ;;
     esac

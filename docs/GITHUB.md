@@ -83,3 +83,20 @@ Depois escolha:
 ```
 
 O AgentOS inicializa Git se precisar, cria o repositorio com `gh repo create` e envia o primeiro push.
+
+## Favoritos e historico
+
+Depois de pesquisar, voce pode salvar um resultado nos favoritos.
+
+Arquivos salvos:
+
+```text
+~/storage/downloads/AgentOS/Favoritos/github_favoritos.tsv
+~/storage/downloads/AgentOS/Historico/buscas_github.tsv
+```
+
+Tambem e possivel exportar a ultima busca para:
+
+```text
+~/storage/downloads/AgentOS/Exportacoes
+```

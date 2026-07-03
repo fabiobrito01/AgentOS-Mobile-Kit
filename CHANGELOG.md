@@ -1,5 +1,14 @@
 # Changelog
 
+## 2.2.0
+
+- Adicionada Central de Pacotes por categoria.
+- Adicionada tela Meu celular / Termux.
+- Adicionado Assistente de Comandos.
+- GitHub Explorer ganhou detalhes de repositorio, favoritos, historico e exportacao.
+- Diagnostico agora verifica ferramentas extras como `rg`, `fzf`, `tmux` e SQLite.
+- Instalador passou a incluir ferramentas mais completas para uso diario.
+
 ## 2.1.0
 
 - Pastas de trabalho movidas para `~/storage/downloads/AgentOS`.

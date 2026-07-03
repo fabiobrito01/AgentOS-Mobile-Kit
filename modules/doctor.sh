@@ -14,7 +14,7 @@ agentos_doctor() {
   printf "\n"
 
   ui_section "Ferramentas"
-  for item in "git:Git" "curl:Curl" "wget:Wget" "gh:GitHub CLI" "ssh:OpenSSH" "jq:JQ" "tar:Tar" "zip:Zip" "python:Python" "node:Node.js"; do
+  for item in "git:Git" "curl:Curl" "wget:Wget" "gh:GitHub CLI" "ssh:OpenSSH" "jq:JQ" "tar:Tar" "zip:Zip" "python:Python" "node:Node.js" "rg:Ripgrep" "fzf:FZF" "tmux:Tmux" "sqlite3:SQLite"; do
     bin="${item%%:*}"
     label="${item#*:}"
     if ! show_command_version "$bin" "$label"; then

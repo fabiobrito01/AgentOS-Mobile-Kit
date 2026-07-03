@@ -10,11 +10,20 @@ agentos
 agentos atualizar
   Atualiza o Termux e instala as ferramentas essenciais.
 
+agentos pacotes
+  Abre a central de pacotes por categoria.
+
 agentos github
   Abre o GitHub Explorer.
 
 agentos projetos
   Abre ferramentas para projetos locais.
+
+agentos celular
+  Abre informacoes, limpeza segura e caminhos do celular.
+
+agentos assistente
+  Mostra comandos prontos e pergunta antes de executar.
 
 agentos backup
   Cria backup das configuracoes e dados do AgentOS.

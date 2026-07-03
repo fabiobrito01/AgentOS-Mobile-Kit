@@ -9,7 +9,12 @@ menu_github() {
     ui_menu_item "3" "Clonar resultado para o celular"
     ui_menu_item "4" "Forkar resultado para meu GitHub e clonar"
     ui_menu_item "5" "Autenticar / verificar GitHub CLI"
-    ui_menu_item "6" "Mostrar URL de um resultado"
+    ui_menu_item "6" "Ver detalhes de um resultado"
+    ui_menu_item "7" "Salvar resultado nos favoritos"
+    ui_menu_item "8" "Listar favoritos"
+    ui_menu_item "9" "Historico de buscas"
+    ui_menu_item "10" "Exportar ultima busca para Download"
+    ui_menu_item "11" "Mostrar URL de um resultado"
     ui_menu_item "0" "Voltar"
     printf "\n"
     read -r -p "Escolha: " op
@@ -49,6 +54,33 @@ menu_github() {
         ui_pause
         ;;
       6)
+        local index
+        index="$(ui_prompt_back "Numero do resultado")" || continue
+        github_show_result_details "$index"
+        ui_pause
+        ;;
+      7)
+        local index
+        index="$(ui_prompt_back "Numero do resultado para favoritar")" || continue
+        github_add_favorite "$index"
+        ui_pause
+        ;;
+      8)
+        ui_title
+        github_list_favorites
+        ui_pause
+        ;;
+      9)
+        ui_title
+        github_list_history
+        ui_pause
+        ;;
+      10)
+        ui_title
+        github_export_last_search
+        ui_pause
+        ;;
+      11)
         local index
         index="$(ui_prompt_back "Numero do resultado")" || continue
         github_open_result_url "$index"

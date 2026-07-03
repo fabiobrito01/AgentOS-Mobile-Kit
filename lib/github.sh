@@ -59,6 +59,7 @@ github_search_repositories() {
   fi
 
   jq -r '.items[] | [.full_name, (.description // ""), (.language // "N/A"), (.stargazers_count|tostring), .clone_url, .html_url] | @tsv' "$json" > "$tsv"
+  agentos_require_storage >/dev/null 2>&1 && printf "%s\t%s\t%s\n" "$(date '+%Y-%m-%d %H:%M:%S')" "$query" "$limit" >> "$AGENTOS_HISTORY_FILE"
   github_print_last_results
 }
 
@@ -137,4 +138,106 @@ github_fork_result() {
 github_open_result_url() {
   local index="$1"
   github_pick_result_field "$index" 6
+}
+
+github_show_result_details() {
+  local index="$1"
+  local full
+  local desc
+  local lang
+  local stars
+  local clone
+  local html
+
+  full="$(github_pick_result_field "$index" 1)"
+  desc="$(github_pick_result_field "$index" 2)"
+  lang="$(github_pick_result_field "$index" 3)"
+  stars="$(github_pick_result_field "$index" 4)"
+  clone="$(github_pick_result_field "$index" 5)"
+  html="$(github_pick_result_field "$index" 6)"
+
+  if [ -z "$full" ]; then
+    ui_error "Resultado invalido."
+    return 1
+  fi
+
+  ui_section "Detalhes do repositorio"
+  printf "Repositorio....: %s\n" "$full"
+  printf "Descricao......: %s\n" "${desc:-Sem descricao}"
+  printf "Linguagem......: %s\n" "$lang"
+  printf "Stars..........: %s\n" "$stars"
+  printf "Clone..........: %s\n" "$clone"
+  printf "URL............: %s\n" "$html"
+}
+
+github_add_favorite() {
+  local index="$1"
+  local full
+  local lang
+  local stars
+  local html
+
+  agentos_require_storage || return 1
+  full="$(github_pick_result_field "$index" 1)"
+  lang="$(github_pick_result_field "$index" 3)"
+  stars="$(github_pick_result_field "$index" 4)"
+  html="$(github_pick_result_field "$index" 6)"
+
+  if [ -z "$full" ]; then
+    ui_error "Resultado invalido."
+    return 1
+  fi
+
+  mkdir -p "$(dirname "$AGENTOS_FAVORITES_FILE")"
+  if grep -Fq "$full"$'\t' "$AGENTOS_FAVORITES_FILE" 2>/dev/null; then
+    ui_warn "Este repositorio ja esta nos favoritos."
+    return 0
+  fi
+
+  printf "%s\t%s\t%s\t%s\t%s\n" "$(date '+%Y-%m-%d %H:%M:%S')" "$full" "$lang" "$stars" "$html" >> "$AGENTOS_FAVORITES_FILE"
+  ui_ok "Favorito salvo: $full"
+}
+
+github_list_favorites() {
+  agentos_require_storage || return 1
+  ui_section "Favoritos GitHub"
+
+  if [ ! -s "$AGENTOS_FAVORITES_FILE" ]; then
+    ui_warn "Nenhum favorito salvo ainda."
+    return 0
+  fi
+
+  awk -F '\t' '{ printf "%2d  %s | %s | stars: %s\n    %s\n", NR, $2, $3, $4, $5 }' "$AGENTOS_FAVORITES_FILE"
+}
+
+github_list_history() {
+  agentos_require_storage || return 1
+  ui_section "Historico de buscas"
+
+  if [ ! -s "$AGENTOS_HISTORY_FILE" ]; then
+    ui_warn "Nenhuma busca registrada ainda."
+    return 0
+  fi
+
+  tail -n 20 "$AGENTOS_HISTORY_FILE" | awk -F '\t' '{ printf "%s | %s | limite %s\n", $1, $2, $3 }'
+}
+
+github_export_last_search() {
+  local tsv="$AGENTOS_DATA_DIR/github_last_search.tsv"
+  local out
+
+  agentos_require_storage || return 1
+  if [ ! -s "$tsv" ]; then
+    ui_warn "Nenhuma busca salva para exportar."
+    return 1
+  fi
+
+  mkdir -p "$AGENTOS_EXPORTS_DIR"
+  out="$AGENTOS_EXPORTS_DIR/github_busca_$(date +%Y%m%d_%H%M%S).txt"
+  {
+    printf "AgentOS Mobile Kit - Resultado GitHub\n"
+    printf "Data: %s\n\n" "$(date)"
+    awk -F '\t' '{ printf "%2d. %s\n    Linguagem: %s | Stars: %s\n    %s\n    %s\n\n", NR, $1, $3, $4, $2, $6 }' "$tsv"
+  } > "$out"
+  ui_ok "Busca exportada para: $out"
 }

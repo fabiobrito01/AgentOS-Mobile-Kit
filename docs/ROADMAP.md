@@ -3,7 +3,6 @@
 ## Prioridade alta
 
 - Melhorar o visual dos menus com telas ainda mais detalhadas.
-- Adicionar favoritos de repositorios pesquisados.
 - Adicionar categorias prontas de busca:
   - IA
   - Flutter
@@ -13,15 +12,14 @@
   - Android
   - SaaS
   - Sistemas escolares
-- Adicionar historico de pesquisas.
-- Adicionar exportacao dos resultados para TXT/CSV.
+- Adicionar modo de instalacao de ambientes completos, como Python data, Node web, GitHub power user e Termux minimal.
 
 ## Prioridade media
 
 - Criar tela de detalhes de repositorio antes de clonar.
 - Adicionar criacao de README inicial para projetos novos.
 - Adicionar templates simples de projeto.
-- Adicionar modo de limpeza segura do Termux.
+- Adicionar assistente para configurar SSH no GitHub passo a passo.
 
 ## Futuro
 

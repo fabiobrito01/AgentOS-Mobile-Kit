@@ -24,6 +24,14 @@ agentos github
 
 Abre o menu para pesquisar, clonar e fazer fork de repositorios.
 
+## Pacotes
+
+```bash
+agentos pacotes
+```
+
+Abre a central de pacotes por categoria.
+
 ## Projetos
 
 ```bash
@@ -45,6 +53,22 @@ agentos backup
 ```
 
 Cria backup das configuracoes, dados e logs do AgentOS.
+
+## Meu celular / Termux
+
+```bash
+agentos celular
+```
+
+Mostra espaco, caminhos uteis, arquivos grandes, limpeza segura e exportacao de informacoes.
+
+## Assistente
+
+```bash
+agentos assistente
+```
+
+Mostra comandos prontos para tarefas comuns e pergunta antes de executar.
 
 ## Diagnostico
 

@@ -8,10 +8,12 @@ O objetivo do AgentOS Mobile Kit e simples: abrir uma tela organizada no Termux,
 
 - Atualiza o Termux.
 - Instala ferramentas essenciais: Git, Curl, Wget, GitHub CLI, OpenSSH, JQ, Python, Node.js, Zip, Tar e utilitarios.
+- Instala pacotes por categoria, sem decorar nomes.
 - Configura pastas padrao para projetos.
 - Salva projetos, clones, backups e exportacoes dentro de `Download/AgentOS`, para voce acessar pelo gerenciador de arquivos do celular.
 - Ajuda a autenticar o GitHub CLI.
 - Pesquisa repositorios no GitHub por area, tecnologia ou ideia.
+- Salva favoritos e historico de buscas do GitHub.
 - Clona repositorios para o celular.
 - Faz fork de repositorios para seu GitHub e clona em seguida.
 - Cria repositorios no seu GitHub a partir de uma pasta local.
@@ -19,6 +21,8 @@ O objetivo do AgentOS Mobile Kit e simples: abrir uma tela organizada no Termux,
 - Envia alteracoes com `git add`, `commit` e `push`.
 - Cria e restaura backups basicos do AgentOS.
 - Mostra diagnostico do ambiente.
+- Mostra informacoes do celular/Termux, limpeza segura e arquivos grandes.
+- Tem assistente de comandos para mostrar e executar tarefas comuns.
 
 ## Instalacao rapida no Termux
 
@@ -50,12 +54,15 @@ agentos
 Isso abre a central com menus:
 
 1. Preparar / atualizar Termux
-2. GitHub Explorer
-3. Projetos e trabalho
-4. Backup e restauracao
-5. Configuracoes
-6. Diagnostico
-7. Ajuda e comandos
+2. Central de pacotes
+3. GitHub Explorer
+4. Projetos e trabalho
+5. Meu celular / Termux
+6. Assistente de comandos
+7. Backup e restauracao
+8. Configuracoes
+9. Diagnostico
+10. Ajuda e comandos
 
 ## Estrutura
 
@@ -86,9 +93,12 @@ Pastas criadas no Termux:
 ```bash
 agentos                  # abre o menu
 agentos atualizar         # atualiza Termux e instala ferramentas
+agentos pacotes           # central de pacotes
 agentos github            # abre GitHub Explorer
 agentos projetos          # abre menu de projetos e trabalho
 agentos trabalho          # atalho para o mesmo menu
+agentos celular           # informacoes e manutencao segura
+agentos assistente        # assistente de comandos
 agentos backup            # cria backup
 agentos doctor            # diagnostico
 agentos config            # configuracoes
@@ -105,6 +115,9 @@ O menu GitHub permite:
 - fazer fork para sua conta e clonar;
 - verificar login do GitHub CLI;
 - copiar/mostrar URL de um resultado.
+- salvar favoritos;
+- ver historico;
+- exportar a ultima busca para Download.
 
 Para usar fork, criar repo e push, voce precisa estar logado:
 
@@ -115,7 +128,7 @@ gh auth status
 
 ## Status
 
-Versao atual: `2.1.0`
+Versao atual: `2.2.0`
 
 Esta versao substitui a estrutura antiga por uma base mais limpa, direta e organizada para uso real no Termux.
 

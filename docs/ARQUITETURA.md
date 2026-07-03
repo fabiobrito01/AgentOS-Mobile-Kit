@@ -23,8 +23,11 @@ lib/github.sh    Funcoes de busca, clone, fork e login GitHub
 
 ```text
 modules/termux.sh     Atualizacao, pacotes, storage e Git
+modules/packages.sh   Central de pacotes por categoria
 modules/github.sh     Menu GitHub Explorer
 modules/projects.sh   Projetos locais, pull, push e criacao de repo
+modules/device.sh     Informacoes e manutencao segura do celular
+modules/assistant.sh  Assistente de comandos
 modules/backup.sh     Backup e restauracao
 modules/settings.sh   Configuracoes
 modules/doctor.sh     Diagnostico
@@ -41,6 +44,8 @@ logs/agentos.log                               Registro basico de sessoes
 ~/storage/downloads/AgentOS/GitHub             Repositorios clonados
 ~/storage/downloads/AgentOS/Backups            Backups
 ~/storage/downloads/AgentOS/Exportacoes        Relatorios e ZIPs
+~/storage/downloads/AgentOS/Favoritos          Favoritos do GitHub
+~/storage/downloads/AgentOS/Historico          Historico de buscas
 ```
 
 Essas pastas entram no `.gitignore`, porque sao dados do usuario.

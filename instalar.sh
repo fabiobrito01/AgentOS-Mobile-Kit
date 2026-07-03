@@ -19,7 +19,7 @@ printf "[1/6] Atualizando Termux...\n"
 pkg update -y && pkg upgrade -y
 
 printf "[2/6] Instalando dependencias essenciais...\n"
-pkg install -y git curl wget gh openssh jq tar zip unzip nano vim tree rsync python nodejs
+pkg install -y git curl wget gh openssh jq tar zip unzip nano vim tree rsync python nodejs ripgrep fzf htop tmux sqlite less
 
 printf "[3/6] Preparando pastas...\n"
 mkdir -p "$TARGET_DIR"
