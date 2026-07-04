@@ -43,7 +43,7 @@ react native inventory
 Depois da busca:
 
 ```text
-3  Clonar resultado para o celular
+2  Clonar para Download/Projetos
 ```
 
 O projeto sera clonado em:
@@ -67,6 +67,20 @@ gh repo fork
 ```
 
 O repositorio passa a existir na sua conta e tambem fica clonado no celular.
+
+## Fluxo de acoes
+
+Depois de pesquisar, escolha um numero de resultado. O AgentOS abre:
+
+```text
+1 Ver detalhes
+2 Clonar para Download/Projetos
+3 Fazer Fork para meu GitHub
+4 Baixar ZIP
+5 Abrir pagina do GitHub
+6 Salvar nos favoritos
+0 Voltar
+```
 
 ## Subir projeto local para seu GitHub
 

@@ -113,6 +113,30 @@ github_clone_result() {
   git clone "$clone_url" "$AGENTOS_GITHUB_DIR/$name"
 }
 
+github_clone_result_projects() {
+  local index="$1"
+  local clone_url
+  local name
+  agentos_require_storage || return 1
+
+  clone_url="$(github_pick_result_field "$index" 5)"
+
+  if [ -z "$clone_url" ]; then
+    ui_error "Resultado invalido."
+    return 1
+  fi
+
+  mkdir -p "$AGENTOS_PROJECTS_DIR"
+  name="$(basename "$clone_url" .git)"
+
+  if [ -d "$AGENTOS_PROJECTS_DIR/$name" ]; then
+    ui_warn "A pasta ja existe: $AGENTOS_PROJECTS_DIR/$name"
+    return 1
+  fi
+
+  git clone "$clone_url" "$AGENTOS_PROJECTS_DIR/$name"
+}
+
 github_fork_result() {
   local index="$1"
   local full_name
@@ -138,6 +162,33 @@ github_fork_result() {
 github_open_result_url() {
   local index="$1"
   github_pick_result_field "$index" 6
+}
+
+github_download_zip_result() {
+  local index="$1"
+  local full
+  local name
+  local out
+  agentos_require_storage || return 1
+
+  full="$(github_pick_result_field "$index" 1)"
+  if [ -z "$full" ]; then
+    ui_error "Resultado invalido."
+    return 1
+  fi
+
+  mkdir -p "$AGENTOS_EXPORTS_DIR/repositorios_zip"
+  name="$(basename "$full")"
+  out="$AGENTOS_EXPORTS_DIR/repositorios_zip/${name}_$(date +%Y%m%d_%H%M%S).zip"
+
+  if cmd_exists gh && github_auth_status; then
+    gh api "repos/$full/zipball" > "$out"
+  else
+    curl -LfsS "https://github.com/$full/archive/refs/heads/main.zip" -o "$out" || \
+    curl -LfsS "https://github.com/$full/archive/refs/heads/master.zip" -o "$out"
+  fi
+
+  ui_ok "ZIP salvo em: $out"
 }
 
 github_show_result_details() {
@@ -240,4 +291,40 @@ github_export_last_search() {
     awk -F '\t' '{ printf "%2d. %s\n    Linguagem: %s | Stars: %s\n    %s\n    %s\n\n", NR, $1, $3, $4, $2, $6 }' "$tsv"
   } > "$out"
   ui_ok "Busca exportada para: $out"
+}
+
+github_result_actions() {
+  local index="$1"
+
+  while true; do
+    ui_title
+    github_show_result_details "$index" || return 1
+    printf "\n"
+    ui_menu_item "1" "Ver detalhes"
+    ui_menu_item "2" "Clonar para Download/Projetos"
+    ui_menu_item "3" "Fazer fork para meu GitHub"
+    ui_menu_item "4" "Baixar ZIP"
+    ui_menu_item "5" "Abrir/mostrar pagina do GitHub"
+    ui_menu_item "6" "Salvar nos favoritos"
+    ui_menu_item "0" "Voltar"
+    printf "\n"
+    read -r -p "Escolha: " op
+
+    case "$op" in
+      1) github_show_result_details "$index"; ui_pause ;;
+      2) github_clone_result_projects "$index"; ui_pause ;;
+      3) github_fork_result "$index"; ui_pause ;;
+      4) github_download_zip_result "$index"; ui_pause ;;
+      5) github_open_result_url "$index"; ui_pause ;;
+      6) github_add_favorite "$index"; ui_pause ;;
+      0) return 0 ;;
+      *) ui_warn "Opcao invalida."; sleep 1 ;;
+    esac
+  done
+}
+
+github_pick_result_actions() {
+  local index
+  index="$(ui_prompt_back "Numero do resultado")" || return 0
+  github_result_actions "$index"
 }

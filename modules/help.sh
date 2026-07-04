@@ -16,11 +16,17 @@ agentos pacotes
 agentos github
   Abre o GitHub Explorer.
 
+agentos manager
+  Gerencia seus repositorios do GitHub.
+
 agentos auditoria
   Audita seus repositorios e abre o Catalogo Turbo.
 
 agentos projetos
-  Abre ferramentas para projetos locais.
+  Abre o Workspace inteligente.
+
+agentos sistema
+  Abre a central do Termux e atualizacao do AgentOS.
 
 agentos celular
   Abre informacoes, limpeza segura e caminhos do celular.

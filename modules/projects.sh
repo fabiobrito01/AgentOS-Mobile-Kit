@@ -255,31 +255,107 @@ projects_show_cd() {
   printf "cd \"%s\"\n" "$dir"
 }
 
+workspace_detect_type() {
+  local dir="$1"
+  if [ -f "$dir/pubspec.yaml" ]; then printf "Flutter"; return 0; fi
+  if [ -f "$dir/package.json" ]; then printf "Node"; return 0; fi
+  if [ -f "$dir/requirements.txt" ] || find "$dir" -maxdepth 1 -name "*.py" | grep -q .; then printf "Python"; return 0; fi
+  if [ -f "$dir/Cargo.toml" ]; then printf "Rust"; return 0; fi
+  if [ -f "$dir/go.mod" ]; then printf "Go"; return 0; fi
+  if [ -f "$dir/settings.gradle" ] || [ -f "$dir/build.gradle" ] || [ -f "$dir/build.gradle.kts" ]; then printf "Android"; return 0; fi
+  if [ -f "$dir/artisan" ] && [ -f "$dir/composer.json" ]; then printf "Laravel"; return 0; fi
+  printf "Generico"
+}
+
+workspace_commands_for_type() {
+  local type="$1"
+  case "$type" in
+    Flutter)
+      printf "flutter pub get\nflutter analyze\nflutter test\nflutter run\nflutter build apk\n"
+      ;;
+    Node)
+      printf "npm install\nnpm run dev\nnpm test\nnpm run build\nnpm start\n"
+      ;;
+    Python)
+      printf "python -m venv .venv\nsource .venv/bin/activate\npip install -r requirements.txt\npython main.py\npytest\n"
+      ;;
+    Rust)
+      printf "cargo check\ncargo test\ncargo run\ncargo build --release\n"
+      ;;
+    Go)
+      printf "go mod tidy\ngo test ./...\ngo run .\ngo build ./...\n"
+      ;;
+    Android)
+      printf "./gradlew tasks\n./gradlew test\n./gradlew assembleDebug\n"
+      ;;
+    Laravel)
+      printf "composer install\nphp artisan serve\nphp artisan test\nphp artisan migrate\n"
+      ;;
+    *)
+      printf "git status\ngit pull --ff-only\ngit add .\ngit commit -m \"Atualizacao\"\ngit push\n"
+      ;;
+  esac
+}
+
+workspace_inspect_project() {
+  local dir
+  local type
+  dir="$(projects_pick_dir)" || return 1
+  type="$(workspace_detect_type "$dir")"
+
+  ui_title
+  ui_section "Workspace"
+  printf "Pasta..........: %s\n" "$dir"
+  printf "Tipo detectado.: %s\n" "$type"
+  printf "\nComandos sugeridos:\n"
+  workspace_commands_for_type "$type" | nl -w2 -s"  "
+}
+
+workspace_run_suggested() {
+  local dir
+  local type
+  local choice
+  local cmd
+  dir="$(projects_pick_dir)" || return 1
+  type="$(workspace_detect_type "$dir")"
+  ui_title
+  ui_section "Executar comando sugerido ($type)"
+  workspace_commands_for_type "$type" | nl -w2 -s"  "
+  printf "\n"
+  choice="$(ui_prompt_back "Numero do comando")" || return 0
+  cmd="$(workspace_commands_for_type "$type" | sed -n "${choice}p")"
+  [ -z "$cmd" ] && ui_error "Comando invalido." && return 1
+  safe_cd "$dir" || return 1
+  command_preview "$cmd"
+}
+
 menu_projects() {
   while true; do
     ui_title
-    ui_header_small "Projetos e trabalho no Termux"
+    ui_header_small "Workspace"
     ui_menu_item "1" "Criar projeto do zero"
-    ui_menu_item "2" "Listar pastas de trabalho"
-    ui_menu_item "3" "Mostrar comando cd de uma pasta"
-    ui_menu_item "4" "Ver status Git de uma pasta"
-    ui_menu_item "5" "Atualizar projeto existente (git pull)"
-    ui_menu_item "6" "Enviar alteracoes para GitHub"
-    ui_menu_item "7" "Criar repositorio GitHub a partir de uma pasta"
-    ui_menu_item "8" "Exportar projeto em ZIP para Download"
+    ui_menu_item "2" "Abrir/inspecionar projeto"
+    ui_menu_item "3" "Comandos inteligentes do projeto"
+    ui_menu_item "4" "Git status"
+    ui_menu_item "5" "Git pull"
+    ui_menu_item "6" "Git push"
+    ui_menu_item "7" "Exportar ZIP"
+    ui_menu_item "8" "Abrir pasta / comando cd"
+    ui_menu_item "9" "Criar repositorio GitHub"
     ui_menu_item "0" "Voltar"
     printf "\n"
     read -r -p "Escolha: " op
 
     case "$op" in
       1) projects_create_new; ui_pause ;;
-      2) projects_list; ui_pause ;;
-      3) projects_show_cd; ui_pause ;;
+      2) workspace_inspect_project; ui_pause ;;
+      3) workspace_run_suggested; ui_pause ;;
       4) projects_git_status; ui_pause ;;
       5) projects_pull; ui_pause ;;
       6) projects_push_changes; ui_pause ;;
-      7) projects_create_repo_from_dir; ui_pause ;;
-      8) projects_export_zip; ui_pause ;;
+      7) projects_export_zip; ui_pause ;;
+      8) projects_show_cd; ui_pause ;;
+      9) projects_create_repo_from_dir; ui_pause ;;
       0) return 0 ;;
       *) ui_warn "Opcao invalida."; sleep 1 ;;
     esac

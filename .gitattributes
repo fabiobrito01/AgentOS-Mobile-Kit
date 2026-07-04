@@ -5,3 +5,4 @@ instalar.sh text eol=lf
 VERSION text eol=lf
 *.md text eol=lf
 *.conf text eol=lf
+*.png binary

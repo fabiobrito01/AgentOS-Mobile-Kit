@@ -1,0 +1,25 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  shell:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install tools
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y shellcheck shfmt
+
+      - name: Smoke test
+        run: bash tests/smoke.sh
+
+      - name: ShellCheck
+        run: shellcheck -e SC1090,SC1091,SC2034,SC2086,SC2155,SC2294 agentos instalar.sh lib/*.sh modules/*.sh tests/*.sh
+
+      - name: shfmt check
+        run: shfmt -d -i 2 agentos instalar.sh lib modules tests

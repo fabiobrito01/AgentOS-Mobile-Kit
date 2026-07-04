@@ -1,5 +1,15 @@
 # Changelog
 
+## 2.4.0
+
+- GitHub Explorer virou fluxo principal com acoes imediatas apos a pesquisa.
+- Adicionado GitHub Manager para conta pessoal.
+- Workspace agora detecta Flutter, Node, Python, Rust, Go, Android e Laravel.
+- Diagnostico ampliado com espaco, memoria, bateria, rede, SSH, Git e GitHub.
+- Adicionada atualizacao automatica do AgentOS via menu Sistema.
+- README refeito com logo, badges e estrutura profissional.
+- Adicionados LICENSE, CONTRIBUTING, SECURITY, templates e GitHub Actions.
+
 ## 2.3.0
 
 - Adicionada tela Auditoria GitHub e Catalogo Turbo.

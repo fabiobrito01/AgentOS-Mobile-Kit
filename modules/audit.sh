@@ -127,7 +127,9 @@ audit_clone_repo() {
   local repo
   owner="$(audit_owner)"
   repo="$(ui_prompt_back "Nome do repositorio")" || return 0
-  [ -z "$owner" ] || [ -z "$repo" ] && return 1
+  if [ -z "$owner" ] || [ -z "$repo" ]; then
+    return 1
+  fi
 
   mkdir -p "$AGENTOS_GITHUB_DIR"
   gh repo clone "$owner/$repo" "$AGENTOS_GITHUB_DIR/$repo"

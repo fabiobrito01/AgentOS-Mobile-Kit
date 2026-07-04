@@ -24,6 +24,14 @@ agentos github
 
 Abre o menu para pesquisar, clonar e fazer fork de repositorios.
 
+## GitHub Manager
+
+```bash
+agentos manager
+```
+
+Gerencia repositorios da sua conta: listar, atualizar clones locais, criar, arquivar, excluir com confirmacao e exportar relatorio.
+
 ## Auditoria GitHub
 
 ```bash
@@ -46,7 +54,7 @@ Abre a central de pacotes por categoria.
 agentos projetos
 ```
 
-Abre o menu para criar projetos do zero, gerenciar pastas locais, atualizar repositorios, enviar commits, exportar ZIP e criar repositorios no GitHub.
+Abre o Workspace inteligente para criar projetos, detectar tecnologias e rodar comandos especificos.
 
 ```bash
 agentos trabalho
@@ -69,6 +77,14 @@ agentos celular
 ```
 
 Mostra espaco, caminhos uteis, arquivos grandes, limpeza segura e exportacao de informacoes.
+
+## Sistema
+
+```bash
+agentos sistema
+```
+
+Atualiza Termux, instala ferramentas, configura permissoes, Git, GitHub CLI, pacotes e atualiza o proprio AgentOS.
 
 ## Assistente
 

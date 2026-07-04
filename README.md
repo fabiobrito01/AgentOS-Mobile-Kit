@@ -1,34 +1,39 @@
-# AgentOS Mobile Kit
+<p align="center">
+  <img src="assets/brand/agentos_logo.png" alt="AgentOS" width="360">
+</p>
 
-Central para preparar o Termux do zero e usar o celular como ambiente de trabalho com Git, GitHub e projetos locais.
+<h1 align="center">AgentOS Mobile Kit</h1>
 
-O objetivo do AgentOS Mobile Kit e simples: abrir uma tela organizada no Termux, escolher opcoes por numero e executar tarefas comuns sem decorar comandos longos.
+<p align="center">
+  Uma central profissional para transformar o Termux em ambiente de trabalho, GitHub, automacao e desenvolvimento direto no celular.
+</p>
 
-## O que ele faz
+<p align="center">
+  <a href="LICENSE"><img alt="License" src="https://img.shields.io/badge/license-Apache--2.0-blue"></a>
+  <img alt="CI" src="https://img.shields.io/github/actions/workflow/status/fabiobrito01/AgentOS-Mobile-Kit/ci.yml?label=CI">
+  <img alt="Shell" src="https://img.shields.io/badge/shell-bash-4EAA25">
+  <img alt="Platform" src="https://img.shields.io/badge/platform-Termux%20%7C%20Android-00a86b">
+  <img alt="GitHub Explorer" src="https://img.shields.io/badge/GitHub%20Explorer-core-111827">
+  <img alt="Version" src="https://img.shields.io/badge/version-2.4.0-7c3aed">
+</p>
 
-- Atualiza o Termux.
-- Instala ferramentas essenciais: Git, Curl, Wget, GitHub CLI, OpenSSH, JQ, Python, Node.js, Zip, Tar e utilitarios.
-- Instala pacotes por categoria, sem decorar nomes.
-- Configura pastas padrao para projetos.
-- Salva projetos, clones, backups e exportacoes dentro de `Download/AgentOS`, para voce acessar pelo gerenciador de arquivos do celular.
-- Ajuda a autenticar o GitHub CLI.
-- Pesquisa repositorios no GitHub por area, tecnologia ou ideia.
-- Salva favoritos e historico de buscas do GitHub.
-- Audita seus repositorios do GitHub e gera relatorio.
-- Traz Catalogo Turbo com repos fortes para IA, automacao, agentes, mobile e dados.
-- Clona repositorios para o celular.
-- Faz fork de repositorios para seu GitHub e clona em seguida.
-- Cria repositorios no seu GitHub a partir de uma pasta local.
-- Atualiza projetos existentes com `git pull`.
-- Envia alteracoes com `git add`, `commit` e `push`.
-- Cria e restaura backups basicos do AgentOS.
-- Mostra diagnostico do ambiente.
-- Mostra informacoes do celular/Termux, limpeza segura e arquivos grandes.
-- Tem assistente de comandos para mostrar e executar tarefas comuns.
+---
 
-## Instalacao rapida no Termux
+## Visao geral
 
-Cole no Termux:
+O AgentOS Mobile Kit deixa o Termux mais amigavel: voce abre um painel, escolhe numeros e executa tarefas de GitHub, projetos, pacotes, diagnostico e manutencao sem decorar comandos longos.
+
+Ele salva projetos, clones, relatorios, favoritos e backups em:
+
+```text
+~/storage/downloads/AgentOS
+```
+
+Assim voce consegue acessar tudo pelo gerenciador de arquivos do Android.
+
+## Instalacao
+
+No Termux:
 
 ```bash
 pkg update -y &&
@@ -36,114 +41,138 @@ pkg upgrade -y &&
 pkg install git curl wget gh openssh jq -y &&
 git clone https://github.com/fabiobrito01/AgentOS-Mobile-Kit.git ~/AgentOS-Mobile-Kit &&
 cd ~/AgentOS-Mobile-Kit &&
-chmod +x instalar.sh &&
 bash instalar.sh &&
 agentos
 ```
 
-Depois, para autenticar o GitHub:
+Se o repositorio estiver privado:
 
 ```bash
 gh auth login
 ```
 
-## Comando principal
-
-```bash
-agentos
-```
-
-Isso abre a central com menus:
-
-1. Preparar / atualizar Termux
-2. Central de pacotes
-3. GitHub Explorer
-4. Auditoria GitHub e Catalogo Turbo
-5. Projetos e trabalho
-6. Meu celular / Termux
-7. Assistente de comandos
-8. Backup e restauracao
-9. Configuracoes
-10. Diagnostico
-11. Ajuda e comandos
-
-## Estrutura
+## Menu principal
 
 ```text
-AgentOS-Mobile-Kit/
-  agentos                 Comando principal
-  instalar.sh             Instalador oficial
-  configs/                Configuracoes padrao
-  lib/                    Bibliotecas internas
-  modules/                Menus e funcionalidades
-  docs/                   Documentacao
-  scripts/                Scripts auxiliares
-  tests/                  Smoke test local
-```
-
-Pastas criadas no Termux:
-
-```text
-~/AgentOS-Mobile-Kit                    Instalacao do AgentOS
-~/storage/downloads/AgentOS/Projetos    Projetos pessoais
-~/storage/downloads/AgentOS/GitHub      Repositorios clonados
-~/storage/downloads/AgentOS/Backups     Backups
-~/storage/downloads/AgentOS/Exportacoes Relatorios e arquivos ZIP
-```
-
-## Comandos diretos
-
-```bash
-agentos                  # abre o menu
-agentos atualizar         # atualiza Termux e instala ferramentas
-agentos pacotes           # central de pacotes
-agentos github            # abre GitHub Explorer
-agentos auditoria         # auditoria GitHub e catalogo turbo
-agentos projetos          # abre menu de projetos e trabalho
-agentos trabalho          # atalho para o mesmo menu
-agentos celular           # informacoes e manutencao segura
-agentos assistente        # assistente de comandos
-agentos backup            # cria backup
-agentos doctor            # diagnostico
-agentos config            # configuracoes
-agentos version           # versao
+1  GitHub Explorer
+2  GitHub Manager
+3  Workspace
+4  Sistema
+5  Catalogo Turbo
+6  Meu celular / Termux
+7  Assistente de comandos
+8  Backup e restauracao
+9  Configuracoes
+10 Diagnostico
+11 Ajuda e comandos
+0  Sair
 ```
 
 ## GitHub Explorer
 
-O menu GitHub permite:
+O coracao do sistema. Depois de pesquisar um repositorio, o AgentOS abre uma tela de acoes:
 
-- pesquisar repositorios;
-- listar a ultima busca;
-- clonar um resultado para `~/GitHub`;
-- fazer fork para sua conta e clonar;
-- verificar login do GitHub CLI;
-- copiar/mostrar URL de um resultado.
-- salvar favoritos;
-- ver historico;
-- exportar a ultima busca para Download.
-
-Para usar fork, criar repo e push, voce precisa estar logado:
-
-```bash
-gh auth login
-gh auth status
+```text
+1  Ver detalhes
+2  Clonar para Download/Projetos
+3  Fazer fork para meu GitHub
+4  Baixar ZIP
+5  Abrir/mostrar pagina do GitHub
+6  Salvar nos favoritos
+0  Voltar
 ```
 
-## Status
+Tambem possui favoritos, historico e exportacao da ultima pesquisa.
 
-Versao atual: `2.3.0`
+## GitHub Manager
 
-Esta versao substitui a estrutura antiga por uma base mais limpa, direta e organizada para uso real no Termux.
+Area exclusiva para sua conta:
 
-## Projeto publico e seguranca
-
-O projeto pode ser publico. Ele nao deve guardar tokens, senhas, chaves SSH, arquivos `.env`, bancos locais, backups ou logs. Esses itens estao no `.gitignore`.
-
-Use o GitHub CLI para login:
-
-```bash
-gh auth login
+```text
+1  Meus repositorios
+2  Atualizar repositorios locais
+3  Criar repositorio
+4  Arquivar
+5  Excluir
+6  Catalogo Turbo
+7  Exportar relatorio
+0  Voltar
 ```
 
-Nunca coloque token dentro dos scripts.
+A exclusao exige confirmacao textual. O fluxo recomendado e arquivar antes de excluir.
+
+## Workspace
+
+Reconhece automaticamente projetos:
+
+- Flutter
+- Node
+- Python
+- Rust
+- Go
+- Android/Gradle
+- Laravel
+
+E sugere comandos especificos para cada tipo.
+
+## Sistema
+
+Central do Termux:
+
+```text
+1  Atualizar Termux
+2  Instalar ferramentas
+3  Permissoes
+4  Git
+5  GitHub CLI
+6  Pacotes
+7  Atualizar AgentOS
+0  Voltar
+```
+
+## Diagnostico
+
+Mostra em uma tela:
+
+- espaco livre;
+- memoria;
+- bateria quando Termux:API estiver disponivel;
+- velocidade HTTP;
+- permissoes do Termux;
+- GitHub autenticado;
+- SSH;
+- Git;
+- ferramentas essenciais;
+- pastas do AgentOS.
+
+## Comandos diretos
+
+```bash
+agentos
+agentos github
+agentos manager
+agentos projetos
+agentos sistema
+agentos auditoria
+agentos pacotes
+agentos celular
+agentos assistente
+agentos doctor
+```
+
+## Documentacao
+
+- [Instalacao](docs/INSTALACAO.md)
+- [Comandos](docs/COMANDOS.md)
+- [GitHub Explorer](docs/GITHUB.md)
+- [Auditoria GitHub](docs/AUDITORIA_GITHUB.md)
+- [Pacotes](docs/PACOTES.md)
+- [Meu celular](docs/CELULAR.md)
+- [Assistente](docs/ASSISTENTE.md)
+- [Arquitetura](docs/ARQUITETURA.md)
+- [Seguranca](SECURITY.md)
+- [Contribuindo](CONTRIBUTING.md)
+
+## Licenca
+
+Apache-2.0. Consulte [LICENSE](LICENSE).

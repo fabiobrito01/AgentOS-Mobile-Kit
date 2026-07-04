@@ -11,9 +11,11 @@ source "$AGENTOS_HOME/modules/termux.sh"
 source "$AGENTOS_HOME/modules/packages.sh"
 source "$AGENTOS_HOME/modules/github.sh"
 source "$AGENTOS_HOME/modules/audit.sh"
+source "$AGENTOS_HOME/modules/manager.sh"
 source "$AGENTOS_HOME/modules/projects.sh"
 source "$AGENTOS_HOME/modules/device.sh"
 source "$AGENTOS_HOME/modules/assistant.sh"
+source "$AGENTOS_HOME/modules/system_menu.sh"
 source "$AGENTOS_HOME/modules/backup.sh"
 source "$AGENTOS_HOME/modules/settings.sh"
 source "$AGENTOS_HOME/modules/doctor.sh"
@@ -25,11 +27,11 @@ agentos_init_dirs
 main_menu() {
   while true; do
     ui_title
-    ui_menu_item "1" "Preparar / atualizar Termux"
-    ui_menu_item "2" "Central de pacotes"
-    ui_menu_item "3" "GitHub Explorer"
-    ui_menu_item "4" "Auditoria GitHub e Catalogo Turbo"
-    ui_menu_item "5" "Projetos e trabalho"
+    ui_menu_item "1" "GitHub Explorer"
+    ui_menu_item "2" "GitHub Manager"
+    ui_menu_item "3" "Workspace"
+    ui_menu_item "4" "Sistema"
+    ui_menu_item "5" "Catalogo Turbo"
     ui_menu_item "6" "Meu celular / Termux"
     ui_menu_item "7" "Assistente de comandos"
     ui_menu_item "8" "Backup e restauracao"
@@ -41,11 +43,11 @@ main_menu() {
     read -r -p "Escolha: " op
 
     case "$op" in
-      1) menu_termux ;;
-      2) menu_packages ;;
-      3) menu_github ;;
-      4) menu_audit ;;
-      5) menu_projects ;;
+      1) menu_github ;;
+      2) menu_manager ;;
+      3) menu_projects ;;
+      4) menu_system ;;
+      5) menu_audit ;;
       6) menu_device ;;
       7) menu_assistant ;;
       8) menu_backup ;;
@@ -64,8 +66,10 @@ case "${1:-menu}" in
   atualizar|update|termux) termux_full_update ;;
   pacotes|packages|pkg) menu_packages ;;
   github) menu_github ;;
+  manager|github-manager) menu_manager ;;
   auditoria|audit|turbo|catalogo) menu_audit ;;
   projetos|projects|trabalho|work) menu_projects ;;
+  sistema|system) menu_system ;;
   celular|device) menu_device ;;
   assistente|assistant) menu_assistant ;;
   backup) backup_create ;;

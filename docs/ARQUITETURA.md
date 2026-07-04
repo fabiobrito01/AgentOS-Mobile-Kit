@@ -25,8 +25,10 @@ lib/github.sh    Funcoes de busca, clone, fork e login GitHub
 modules/termux.sh     Atualizacao, pacotes, storage e Git
 modules/packages.sh   Central de pacotes por categoria
 modules/github.sh     Menu GitHub Explorer
+modules/manager.sh    Gerenciamento da conta GitHub
 modules/audit.sh      Auditoria de repositorios e Catalogo Turbo
 modules/projects.sh   Projetos locais, pull, push e criacao de repo
+modules/system_menu.sh Sistema, permissoes, pacotes e auto-update
 modules/device.sh     Informacoes e manutencao segura do celular
 modules/assistant.sh  Assistente de comandos
 modules/backup.sh     Backup e restauracao
