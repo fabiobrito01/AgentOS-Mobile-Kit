@@ -35,7 +35,8 @@ device_clean_safe() {
   if ! ui_confirm "Continuar"; then
     return 0
   fi
-  rm -rf "$AGENTOS_TMP_DIR"/*
+  mkdir -p "$AGENTOS_TMP_DIR"
+  find "$AGENTOS_TMP_DIR" -mindepth 1 -maxdepth 1 -exec rm -rf -- {} +
   pkg clean
   ui_ok "Limpeza concluida."
 }

@@ -72,7 +72,7 @@ audit_classify_repos() {
     printf "nome\tprivado\tfork\tarquivado\tlinguagem\tatualizado\trecomendacao\tmotivo\turl\n"
     while IFS=$'\t' read -r name priv fork archived lang updated desc url; do
       rec="$(audit_recommendation "$name")"
-      printf "%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\n" "$name" "$priv" "$fork" "$archived" "$lang" "$updated" "${rec%|*}" "${rec#*|}" "$url"
+      printf "%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\n" "$name" "$priv" "$fork" "$archived" "$lang" "$updated" "${rec%|*}" "${rec#*|}" "$url"
     done < "$tsv"
   } > "$out"
 

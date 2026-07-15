@@ -17,9 +17,10 @@ backup_restore_latest() {
   ui_title
   ui_section "Restauracao"
 
-  local file
+  local file latest
   agentos_require_storage || return 1
-  file="$(ls -t "$AGENTOS_BACKUP_DIR"/agentos_backup_*.tar.gz 2>/dev/null | head -n 1)"
+  latest="$(find "$AGENTOS_BACKUP_DIR" -maxdepth 1 -type f -name 'agentos_backup_*.tar.gz' -printf '%f\n' 2>/dev/null | sort -r | head -n 1)"
+  file="${latest:+$AGENTOS_BACKUP_DIR/$latest}"
 
   if [ -z "$file" ]; then
     ui_warn "Nenhum backup encontrado em $AGENTOS_BACKUP_DIR"
