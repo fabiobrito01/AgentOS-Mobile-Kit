@@ -114,7 +114,7 @@ settings_export_report() {
     printf "\nGitHub CLI\n"
     gh --version 2>/dev/null | head -n 1 || true
     gh auth status 2>&1 || true
-  } > "$file"
+  } >"$file"
 
   ui_ok "Relatorio salvo em: $file"
 }
@@ -134,14 +134,35 @@ menu_settings() {
     read -r -p "Escolha: " op
 
     case "$op" in
-      1) settings_show; ui_pause ;;
-      2) settings_edit; ui_pause ;;
-      3) settings_prepare_downloads; ui_pause ;;
-      4) settings_git_identity; ui_pause ;;
-      5) settings_open_config_hint; ui_pause ;;
-      6) settings_export_report; ui_pause ;;
-      0) return 0 ;;
-      *) ui_warn "Opcao invalida."; sleep 1 ;;
+    1)
+      settings_show
+      ui_pause
+      ;;
+    2)
+      settings_edit
+      ui_pause
+      ;;
+    3)
+      settings_prepare_downloads
+      ui_pause
+      ;;
+    4)
+      settings_git_identity
+      ui_pause
+      ;;
+    5)
+      settings_open_config_hint
+      ui_pause
+      ;;
+    6)
+      settings_export_report
+      ui_pause
+      ;;
+    0) return 0 ;;
+    *)
+      ui_warn "Opcao invalida."
+      sleep 1
+      ;;
     esac
   done
 }

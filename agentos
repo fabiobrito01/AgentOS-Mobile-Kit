@@ -43,44 +43,56 @@ main_menu() {
     read -r -p "Escolha: " op
 
     case "$op" in
-      1) menu_github ;;
-      2) menu_manager ;;
-      3) menu_projects ;;
-      4) menu_system ;;
-      5) menu_audit ;;
-      6) menu_device ;;
-      7) menu_assistant ;;
-      8) menu_backup ;;
-      9) menu_settings ;;
-      10) agentos_doctor; ui_pause ;;
-      11) agentos_help; ui_pause ;;
-      0) agentos_log "Sessao encerrada"; exit 0 ;;
-      *) ui_warn "Opcao invalida."; sleep 1 ;;
+    1) menu_github ;;
+    2) menu_manager ;;
+    3) menu_projects ;;
+    4) menu_system ;;
+    5) menu_audit ;;
+    6) menu_device ;;
+    7) menu_assistant ;;
+    8) menu_backup ;;
+    9) menu_settings ;;
+    10)
+      agentos_doctor
+      ui_pause
+      ;;
+    11)
+      agentos_help
+      ui_pause
+      ;;
+    0)
+      agentos_log "Sessao encerrada"
+      exit 0
+      ;;
+    *)
+      ui_warn "Opcao invalida."
+      sleep 1
+      ;;
     esac
   done
 }
 
 case "${1:-menu}" in
-  menu|iniciar) main_menu ;;
-  instalar|setup) menu_termux ;;
-  atualizar|update|termux) termux_full_update ;;
-  pacotes|packages|pkg) menu_packages ;;
-  github) menu_github ;;
-  manager|github-manager) menu_manager ;;
-  auditoria|audit|turbo|catalogo) menu_audit ;;
-  projetos|projects|trabalho|work) menu_projects ;;
-  sistema|system) menu_system ;;
-  celular|device) menu_device ;;
-  assistente|assistant) menu_assistant ;;
-  backup) backup_create ;;
-  restore|restaurar) backup_restore_latest ;;
-  config|configs) menu_settings ;;
-  doctor|diagnostico|verificar) agentos_doctor ;;
-  help|ajuda|-h|--help) agentos_help ;;
-  version|versao|--version) cat "$AGENTOS_HOME/VERSION" ;;
-  *)
-    ui_error "Comando nao reconhecido: $1"
-    printf "Use: agentos ajuda\n"
-    exit 1
-    ;;
+menu | iniciar) main_menu ;;
+instalar | setup) menu_termux ;;
+atualizar | update | termux) termux_full_update ;;
+pacotes | packages | pkg) menu_packages ;;
+github) menu_github ;;
+manager | github-manager) menu_manager ;;
+auditoria | audit | turbo | catalogo) menu_audit ;;
+projetos | projects | trabalho | work) menu_projects ;;
+sistema | system) menu_system ;;
+celular | device) menu_device ;;
+assistente | assistant) menu_assistant ;;
+backup) backup_create ;;
+restore | restaurar) backup_restore_latest ;;
+config | configs) menu_settings ;;
+doctor | diagnostico | verificar) agentos_doctor ;;
+help | ajuda | -h | --help) agentos_help ;;
+version | versao | --version) cat "$AGENTOS_HOME/VERSION" ;;
+*)
+  ui_error "Comando nao reconhecido: $1"
+  printf "Use: agentos ajuda\n"
+  exit 1
+  ;;
 esac
