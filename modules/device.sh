@@ -68,7 +68,7 @@ device_export_info() {
     for bin in git gh curl wget python node jq ssh; do
       show_command_version "$bin" "$bin" || true
     done
-  } > "$file"
+  } >"$file"
   ui_ok "Arquivo salvo em: $file"
 }
 
@@ -87,14 +87,35 @@ menu_device() {
     read -r -p "Escolha: " op
 
     case "$op" in
-      1) device_space; ui_pause ;;
-      2) device_large_files; ui_pause ;;
-      3) device_open_paths; ui_pause ;;
-      4) device_clean_safe; ui_pause ;;
-      5) device_storage_fix; ui_pause ;;
-      6) device_export_info; ui_pause ;;
-      0) return 0 ;;
-      *) ui_warn "Opcao invalida."; sleep 1 ;;
+    1)
+      device_space
+      ui_pause
+      ;;
+    2)
+      device_large_files
+      ui_pause
+      ;;
+    3)
+      device_open_paths
+      ui_pause
+      ;;
+    4)
+      device_clean_safe
+      ui_pause
+      ;;
+    5)
+      device_storage_fix
+      ui_pause
+      ;;
+    6)
+      device_export_info
+      ui_pause
+      ;;
+    0) return 0 ;;
+    *)
+      ui_warn "Opcao invalida."
+      sleep 1
+      ;;
     esac
   done
 }

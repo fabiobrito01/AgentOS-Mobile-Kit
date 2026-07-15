@@ -54,15 +54,33 @@ menu_system() {
     read -r -p "Escolha: " op
 
     case "$op" in
-      1) termux_full_update; ui_pause ;;
-      2) menu_packages ;;
-      3) termux_setup_storage; ui_pause ;;
-      4) termux_configure_git; ui_pause ;;
-      5) github_login; ui_pause ;;
-      6) menu_packages ;;
-      7) agentos_update_check; ui_pause ;;
-      0) return 0 ;;
-      *) ui_warn "Opcao invalida."; sleep 1 ;;
+    1)
+      termux_full_update
+      ui_pause
+      ;;
+    2) menu_packages ;;
+    3)
+      termux_setup_storage
+      ui_pause
+      ;;
+    4)
+      termux_configure_git
+      ui_pause
+      ;;
+    5)
+      github_login
+      ui_pause
+      ;;
+    6) menu_packages ;;
+    7)
+      agentos_update_check
+      ui_pause
+      ;;
+    0) return 0 ;;
+    *)
+      ui_warn "Opcao invalida."
+      sleep 1
+      ;;
     esac
   done
 }

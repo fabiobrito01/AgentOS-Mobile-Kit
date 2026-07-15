@@ -59,7 +59,10 @@ manager_delete_repo() {
   repo="$(ui_prompt_back "Repositorio completo (usuario/repo)")" || return 0
   ui_error "Exclusao e destrutiva. Prefira arquivar."
   confirm="$(ui_prompt_back "Digite EXCLUIR para continuar")" || return 0
-  [ "$confirm" = "EXCLUIR" ] || { ui_warn "Cancelado."; return 0; }
+  [ "$confirm" = "EXCLUIR" ] || {
+    ui_warn "Cancelado."
+    return 0
+  }
   gh repo delete "$repo"
 }
 
@@ -79,15 +82,36 @@ menu_manager() {
     read -r -p "Escolha: " op
 
     case "$op" in
-      1) manager_my_repos; ui_pause ;;
-      2) manager_update_local_repos; ui_pause ;;
-      3) manager_create_repo; ui_pause ;;
-      4) manager_archive_repo; ui_pause ;;
-      5) manager_delete_repo; ui_pause ;;
-      6) menu_audit ;;
-      7) audit_export_report; ui_pause ;;
-      0) return 0 ;;
-      *) ui_warn "Opcao invalida."; sleep 1 ;;
+    1)
+      manager_my_repos
+      ui_pause
+      ;;
+    2)
+      manager_update_local_repos
+      ui_pause
+      ;;
+    3)
+      manager_create_repo
+      ui_pause
+      ;;
+    4)
+      manager_archive_repo
+      ui_pause
+      ;;
+    5)
+      manager_delete_repo
+      ui_pause
+      ;;
+    6) menu_audit ;;
+    7)
+      audit_export_report
+      ui_pause
+      ;;
+    0) return 0 ;;
+    *)
+      ui_warn "Opcao invalida."
+      sleep 1
+      ;;
     esac
   done
 }

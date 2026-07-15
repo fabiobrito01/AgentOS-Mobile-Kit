@@ -118,7 +118,7 @@ projects_create_new() {
   fi
 
   mkdir -p "$dir"
-  cat > "$dir/README.md" <<EOF
+  cat >"$dir/README.md" <<EOF
 # $raw_name
 
 Projeto criado pelo AgentOS Mobile Kit.
@@ -127,7 +127,7 @@ Projeto criado pelo AgentOS Mobile Kit.
 
 Descreva aqui o objetivo, comandos e proximos passos.
 EOF
-  cat > "$dir/.gitignore" <<'EOF'
+  cat >"$dir/.gitignore" <<'EOF'
 .env
 node_modules/
 __pycache__/
@@ -138,16 +138,16 @@ build/
 EOF
 
   case "$template" in
-    1)
-      cat > "$dir/main.sh" <<'EOF'
+  1)
+    cat >"$dir/main.sh" <<'EOF'
 #!/data/data/com.termux/files/usr/bin/bash
 
 echo "Projeto Bash/Termux iniciado."
 EOF
-      chmod +x "$dir/main.sh"
-      ;;
-    2)
-      cat > "$dir/main.py" <<'EOF'
+    chmod +x "$dir/main.sh"
+    ;;
+  2)
+    cat >"$dir/main.py" <<'EOF'
 def main():
     print("Projeto Python iniciado.")
 
@@ -155,17 +155,17 @@ def main():
 if __name__ == "__main__":
     main()
 EOF
-      ;;
-    3)
-      cat > "$dir/package.json" <<EOF
+    ;;
+  3)
+    cat >"$dir/package.json" <<EOF
 {"name":"$name","version":"0.1.0","private":true,"scripts":{"start":"node index.js"}}
 EOF
-      cat > "$dir/index.js" <<'EOF'
+    cat >"$dir/index.js" <<'EOF'
 console.log("Projeto Node.js iniciado.");
 EOF
-      ;;
-    4)
-      cat > "$dir/index.html" <<'EOF'
+    ;;
+  4)
+    cat >"$dir/index.html" <<'EOF'
 <!doctype html>
 <html lang="pt-BR">
 <head>
@@ -183,17 +183,17 @@ EOF
 </body>
 </html>
 EOF
-      cat > "$dir/style.css" <<'EOF'
+    cat >"$dir/style.css" <<'EOF'
 body { font-family: system-ui, sans-serif; margin: 32px; background: #101820; color: #f4f7fb; }
 button { padding: 10px 14px; border: 0; border-radius: 6px; background: #18a058; color: white; }
 EOF
-      cat > "$dir/app.js" <<'EOF'
+    cat >"$dir/app.js" <<'EOF'
 document.getElementById("acao").addEventListener("click", () => alert("Funcionando."));
 EOF
-      ;;
-    5)
-      mkdir -p "$dir/docs"
-      cat > "$dir/docs/PLANO.md" <<'EOF'
+    ;;
+  5)
+    mkdir -p "$dir/docs"
+    cat >"$dir/docs/PLANO.md" <<'EOF'
 # Plano
 
 ## Objetivo
@@ -204,10 +204,10 @@ EOF
 
 ## Observacoes
 EOF
-      ;;
-    *)
-      ui_warn "Modelo nao reconhecido. Criado projeto basico."
-      ;;
+    ;;
+  *)
+    ui_warn "Modelo nao reconhecido. Criado projeto basico."
+    ;;
   esac
 
   safe_cd "$dir" || return 1
@@ -257,43 +257,64 @@ projects_show_cd() {
 
 workspace_detect_type() {
   local dir="$1"
-  if [ -f "$dir/pubspec.yaml" ]; then printf "Flutter"; return 0; fi
-  if [ -f "$dir/package.json" ]; then printf "Node"; return 0; fi
-  if [ -f "$dir/requirements.txt" ] || find "$dir" -maxdepth 1 -name "*.py" | grep -q .; then printf "Python"; return 0; fi
-  if [ -f "$dir/Cargo.toml" ]; then printf "Rust"; return 0; fi
-  if [ -f "$dir/go.mod" ]; then printf "Go"; return 0; fi
-  if [ -f "$dir/settings.gradle" ] || [ -f "$dir/build.gradle" ] || [ -f "$dir/build.gradle.kts" ]; then printf "Android"; return 0; fi
-  if [ -f "$dir/artisan" ] && [ -f "$dir/composer.json" ]; then printf "Laravel"; return 0; fi
+  if [ -f "$dir/pubspec.yaml" ]; then
+    printf "Flutter"
+    return 0
+  fi
+  if [ -f "$dir/package.json" ]; then
+    printf "Node"
+    return 0
+  fi
+  if [ -f "$dir/requirements.txt" ] || find "$dir" -maxdepth 1 -name "*.py" | grep -q .; then
+    printf "Python"
+    return 0
+  fi
+  if [ -f "$dir/Cargo.toml" ]; then
+    printf "Rust"
+    return 0
+  fi
+  if [ -f "$dir/go.mod" ]; then
+    printf "Go"
+    return 0
+  fi
+  if [ -f "$dir/settings.gradle" ] || [ -f "$dir/build.gradle" ] || [ -f "$dir/build.gradle.kts" ]; then
+    printf "Android"
+    return 0
+  fi
+  if [ -f "$dir/artisan" ] && [ -f "$dir/composer.json" ]; then
+    printf "Laravel"
+    return 0
+  fi
   printf "Generico"
 }
 
 workspace_commands_for_type() {
   local type="$1"
   case "$type" in
-    Flutter)
-      printf "flutter pub get\nflutter analyze\nflutter test\nflutter run\nflutter build apk\n"
-      ;;
-    Node)
-      printf "npm install\nnpm run dev\nnpm test\nnpm run build\nnpm start\n"
-      ;;
-    Python)
-      printf "python -m venv .venv\nsource .venv/bin/activate\npip install -r requirements.txt\npython main.py\npytest\n"
-      ;;
-    Rust)
-      printf "cargo check\ncargo test\ncargo run\ncargo build --release\n"
-      ;;
-    Go)
-      printf "go mod tidy\ngo test ./...\ngo run .\ngo build ./...\n"
-      ;;
-    Android)
-      printf "./gradlew tasks\n./gradlew test\n./gradlew assembleDebug\n"
-      ;;
-    Laravel)
-      printf "composer install\nphp artisan serve\nphp artisan test\nphp artisan migrate\n"
-      ;;
-    *)
-      printf "git status\ngit pull --ff-only\ngit add .\ngit commit -m \"Atualizacao\"\ngit push\n"
-      ;;
+  Flutter)
+    printf "flutter pub get\nflutter analyze\nflutter test\nflutter run\nflutter build apk\n"
+    ;;
+  Node)
+    printf "npm install\nnpm run dev\nnpm test\nnpm run build\nnpm start\n"
+    ;;
+  Python)
+    printf "python -m venv .venv\nsource .venv/bin/activate\npip install -r requirements.txt\npython main.py\npytest\n"
+    ;;
+  Rust)
+    printf "cargo check\ncargo test\ncargo run\ncargo build --release\n"
+    ;;
+  Go)
+    printf "go mod tidy\ngo test ./...\ngo run .\ngo build ./...\n"
+    ;;
+  Android)
+    printf "./gradlew tasks\n./gradlew test\n./gradlew assembleDebug\n"
+    ;;
+  Laravel)
+    printf "composer install\nphp artisan serve\nphp artisan test\nphp artisan migrate\n"
+    ;;
+  *)
+    printf "git status\ngit pull --ff-only\ngit add .\ngit commit -m \"Atualizacao\"\ngit push\n"
+    ;;
   esac
 }
 
@@ -347,17 +368,47 @@ menu_projects() {
     read -r -p "Escolha: " op
 
     case "$op" in
-      1) projects_create_new; ui_pause ;;
-      2) workspace_inspect_project; ui_pause ;;
-      3) workspace_run_suggested; ui_pause ;;
-      4) projects_git_status; ui_pause ;;
-      5) projects_pull; ui_pause ;;
-      6) projects_push_changes; ui_pause ;;
-      7) projects_export_zip; ui_pause ;;
-      8) projects_show_cd; ui_pause ;;
-      9) projects_create_repo_from_dir; ui_pause ;;
-      0) return 0 ;;
-      *) ui_warn "Opcao invalida."; sleep 1 ;;
+    1)
+      projects_create_new
+      ui_pause
+      ;;
+    2)
+      workspace_inspect_project
+      ui_pause
+      ;;
+    3)
+      workspace_run_suggested
+      ui_pause
+      ;;
+    4)
+      projects_git_status
+      ui_pause
+      ;;
+    5)
+      projects_pull
+      ui_pause
+      ;;
+    6)
+      projects_push_changes
+      ui_pause
+      ;;
+    7)
+      projects_export_zip
+      ui_pause
+      ;;
+    8)
+      projects_show_cd
+      ui_pause
+      ;;
+    9)
+      projects_create_repo_from_dir
+      ui_pause
+      ;;
+    0) return 0 ;;
+    *)
+      ui_warn "Opcao invalida."
+      sleep 1
+      ;;
     esac
   done
 }

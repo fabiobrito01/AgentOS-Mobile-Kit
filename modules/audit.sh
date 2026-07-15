@@ -13,21 +13,21 @@ audit_recommendation() {
   lower="$(printf "%s" "$name" | tr '[:upper:]' '[:lower:]')"
 
   case "$lower" in
-    *agentos*|*ollama*|*open-webui*|*anything-llm*|*litellm*|*qdrant*|*crewai*|*langgraph*|*gpt-researcher*|*khoj*|*superagi*|*agenticseek*|*praisonai*|*agentuniverse*|*ailice*|*memmachine*|*deepanalyze*|*massgen*)
-      printf "MANTER|IA, agentes, memoria ou assistente"
-      ;;
-    *flutter*|*escolar*|*gestao*|*printpapel*|*nomad*|*termux*|*mobile*)
-      printf "MANTER|Projeto proprio ou base de trabalho"
-      ;;
-    *hexstrike*|*dark-moon*|*decepticon*|*hackathon*|*swe-af*)
-      printf "REVISAR|Seguranca, laboratorio ou hackathon; revisar imagem publica"
-      ;;
-    *ultramax*|index|argo|*lua*)
-      printf "ARQUIVAR?|Fora do foco atual ou nome pouco claro"
-      ;;
-    *)
-      printf "REVISAR|Sem categoria clara"
-      ;;
+  *agentos* | *ollama* | *open-webui* | *anything-llm* | *litellm* | *qdrant* | *crewai* | *langgraph* | *gpt-researcher* | *khoj* | *superagi* | *agenticseek* | *praisonai* | *agentuniverse* | *ailice* | *memmachine* | *deepanalyze* | *massgen*)
+    printf "MANTER|IA, agentes, memoria ou assistente"
+    ;;
+  *flutter* | *escolar* | *gestao* | *printpapel* | *nomad* | *termux* | *mobile*)
+    printf "MANTER|Projeto proprio ou base de trabalho"
+    ;;
+  *hexstrike* | *dark-moon* | *decepticon* | *hackathon* | *swe-af*)
+    printf "REVISAR|Seguranca, laboratorio ou hackathon; revisar imagem publica"
+    ;;
+  *ultramax* | index | argo | *lua*)
+    printf "ARQUIVAR?|Fora do foco atual ou nome pouco claro"
+    ;;
+  *)
+    printf "REVISAR|Sem categoria clara"
+    ;;
   esac
 }
 
@@ -49,9 +49,9 @@ audit_fetch_repos() {
   [ -z "$owner" ] && return 1
 
   mkdir -p "$AGENTOS_AUDIT_DIR"
-  gh repo list "$owner" --limit 1000 --json name,isPrivate,isFork,isArchived,primaryLanguage,updatedAt,description,url > "$json"
+  gh repo list "$owner" --limit 1000 --json name,isPrivate,isFork,isArchived,primaryLanguage,updatedAt,description,url >"$json"
 
-  jq -r '.[] | [.name, (.isPrivate|tostring), (.isFork|tostring), (.isArchived|tostring), (.primaryLanguage.name // "N/A"), .updatedAt, (.description // ""), .url] | @tsv' "$json" > "$tsv"
+  jq -r '.[] | [.name, (.isPrivate|tostring), (.isFork|tostring), (.isArchived|tostring), (.primaryLanguage.name // "N/A"), .updatedAt, (.description // ""), .url] | @tsv' "$json" >"$tsv"
   ui_ok "Lista salva em: $tsv"
 }
 
@@ -73,8 +73,8 @@ audit_classify_repos() {
     while IFS=$'\t' read -r name priv fork archived lang updated desc url; do
       rec="$(audit_recommendation "$name")"
       printf "%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\n" "$name" "$priv" "$fork" "$archived" "$lang" "$updated" "${rec%|*}" "${rec#*|}" "$url"
-    done < "$tsv"
-  } > "$out"
+    done <"$tsv"
+  } >"$out"
 
   column -t -s $'\t' "$out" 2>/dev/null | head -n 40 || head -n 40 "$out"
   ui_ok "Classificacao salva em: $out"
@@ -103,7 +103,7 @@ audit_export_report() {
     tail -n +2 "$classified" | while IFS=$'\t' read -r name priv fork archived lang updated rec reason url; do
       printf "| [%s](%s) | %s | %s | %s | %s | %s | %s |\n" "$name" "$url" "$priv" "$fork" "$archived" "$lang" "$rec" "$reason"
     done
-  } > "$report"
+  } >"$report"
 
   ui_ok "Relatorio salvo em: $report"
 }
@@ -138,7 +138,7 @@ audit_clone_repo() {
 catalog_write_turbo() {
   agentos_require_storage || return 1
   mkdir -p "$(dirname "$AGENTOS_CATALOG_FILE")"
-  cat > "$AGENTOS_CATALOG_FILE" <<'EOF'
+  cat >"$AGENTOS_CATALOG_FILE" <<'EOF'
 IA Local	ollama/ollama	Modelos locais e runtime para LLMs
 IA Local	open-webui/open-webui	Interface web para modelos locais
 IA Local	Mintplex-Labs/anything-llm	Workspace local com RAG e documentos
@@ -219,17 +219,47 @@ menu_audit() {
     read -r -p "Escolha: " op
 
     case "$op" in
-      1) audit_fetch_repos; ui_pause ;;
-      2) audit_classify_repos; ui_pause ;;
-      3) audit_export_report; ui_pause ;;
-      4) audit_show_candidates; ui_pause ;;
-      5) audit_clone_repo; ui_pause ;;
-      6) catalog_write_turbo; ui_pause ;;
-      7) catalog_show_turbo; ui_pause ;;
-      8) catalog_clone_pick; ui_pause ;;
-      9) catalog_fork_pick; ui_pause ;;
-      0) return 0 ;;
-      *) ui_warn "Opcao invalida."; sleep 1 ;;
+    1)
+      audit_fetch_repos
+      ui_pause
+      ;;
+    2)
+      audit_classify_repos
+      ui_pause
+      ;;
+    3)
+      audit_export_report
+      ui_pause
+      ;;
+    4)
+      audit_show_candidates
+      ui_pause
+      ;;
+    5)
+      audit_clone_repo
+      ui_pause
+      ;;
+    6)
+      catalog_write_turbo
+      ui_pause
+      ;;
+    7)
+      catalog_show_turbo
+      ui_pause
+      ;;
+    8)
+      catalog_clone_pick
+      ui_pause
+      ;;
+    9)
+      catalog_fork_pick
+      ui_pause
+      ;;
+    0) return 0 ;;
+    *)
+      ui_warn "Opcao invalida."
+      sleep 1
+      ;;
     esac
   done
 }

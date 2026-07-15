@@ -45,15 +45,18 @@ packages_presets() {
     read -r -p "Escolha: " op
 
     case "$op" in
-      1) pkg_install_group "Essencial do AgentOS" git curl wget gh openssh jq tar zip unzip nano vim tree rsync ;;
-      2) pkg_install_group "Desenvolvimento" python nodejs clang make cmake pkg-config git ripgrep ;;
-      3) pkg_install_group "Web e APIs" nodejs python curl jq openssl ;;
-      4) pkg_install_group "Arquivos e produtividade" zip unzip tar tree rsync nano vim less fzf ;;
-      5) pkg_install_group "Rede e diagnostico" curl wget openssh dnsutils net-tools nmap ;;
-      6) pkg_install_group "Banco de dados" sqlite postgresql ;;
-      7) pkg_install_group "Interface de terminal" tmux htop fzf ripgrep bat ;;
-      0) return 0 ;;
-      *) ui_warn "Opcao invalida."; sleep 1 ;;
+    1) pkg_install_group "Essencial do AgentOS" git curl wget gh openssh jq tar zip unzip nano vim tree rsync ;;
+    2) pkg_install_group "Desenvolvimento" python nodejs clang make cmake pkg-config git ripgrep ;;
+    3) pkg_install_group "Web e APIs" nodejs python curl jq openssl ;;
+    4) pkg_install_group "Arquivos e produtividade" zip unzip tar tree rsync nano vim less fzf ;;
+    5) pkg_install_group "Rede e diagnostico" curl wget openssh dnsutils net-tools nmap ;;
+    6) pkg_install_group "Banco de dados" sqlite postgresql ;;
+    7) pkg_install_group "Interface de terminal" tmux htop fzf ripgrep bat ;;
+    0) return 0 ;;
+    *)
+      ui_warn "Opcao invalida."
+      sleep 1
+      ;;
     esac
     ui_pause
   done
@@ -73,13 +76,25 @@ menu_packages() {
     read -r -p "Escolha: " op
 
     case "$op" in
-      1) packages_update_all; ui_pause ;;
-      2) packages_presets ;;
-      3) packages_search; ui_pause ;;
-      4) packages_install_custom; ui_pause ;;
-      5) packages_list_installed ;;
-      0) return 0 ;;
-      *) ui_warn "Opcao invalida."; sleep 1 ;;
+    1)
+      packages_update_all
+      ui_pause
+      ;;
+    2) packages_presets ;;
+    3)
+      packages_search
+      ui_pause
+      ;;
+    4)
+      packages_install_custom
+      ui_pause
+      ;;
+    5) packages_list_installed ;;
+    0) return 0 ;;
+    *)
+      ui_warn "Opcao invalida."
+      sleep 1
+      ;;
     esac
   done
 }

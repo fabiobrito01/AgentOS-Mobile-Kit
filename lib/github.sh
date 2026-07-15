@@ -50,16 +50,16 @@ github_search_repositories() {
   ui_info "Consultando GitHub..."
 
   if github_auth_status; then
-    gh api "search/repositories?q=$encoded&sort=stars&order=desc&per_page=$limit" > "$json"
+    gh api "search/repositories?q=$encoded&sort=stars&order=desc&per_page=$limit" >"$json"
   else
     curl -fsSL \
       -H "Accept: application/vnd.github+json" \
       "https://api.github.com/search/repositories?q=$encoded&sort=stars&order=desc&per_page=$limit" \
-      > "$json"
+      >"$json"
   fi
 
-  jq -r '.items[] | [.full_name, (.description // ""), (.language // "N/A"), (.stargazers_count|tostring), .clone_url, .html_url] | @tsv' "$json" > "$tsv"
-  agentos_require_storage >/dev/null 2>&1 && printf "%s\t%s\t%s\n" "$(date '+%Y-%m-%d %H:%M:%S')" "$query" "$limit" >> "$AGENTOS_HISTORY_FILE"
+  jq -r '.items[] | [.full_name, (.description // ""), (.language // "N/A"), (.stargazers_count|tostring), .clone_url, .html_url] | @tsv' "$json" >"$tsv"
+  agentos_require_storage >/dev/null 2>&1 && printf "%s\t%s\t%s\n" "$(date '+%Y-%m-%d %H:%M:%S')" "$query" "$limit" >>"$AGENTOS_HISTORY_FILE"
   github_print_last_results
 }
 
@@ -79,7 +79,7 @@ github_print_last_results() {
     printf "     %s\n" "${desc:-Sem descricao}"
     printf "     %s\n\n" "$html"
     n=$((n + 1))
-  done < "$tsv"
+  done <"$tsv"
 }
 
 github_pick_result_field() {
@@ -182,10 +182,10 @@ github_download_zip_result() {
   out="$AGENTOS_EXPORTS_DIR/repositorios_zip/${name}_$(date +%Y%m%d_%H%M%S).zip"
 
   if cmd_exists gh && github_auth_status; then
-    gh api "repos/$full/zipball" > "$out"
+    gh api "repos/$full/zipball" >"$out"
   else
-    curl -LfsS "https://github.com/$full/archive/refs/heads/main.zip" -o "$out" || \
-    curl -LfsS "https://github.com/$full/archive/refs/heads/master.zip" -o "$out"
+    curl -LfsS "https://github.com/$full/archive/refs/heads/main.zip" -o "$out" ||
+      curl -LfsS "https://github.com/$full/archive/refs/heads/master.zip" -o "$out"
   fi
 
   ui_ok "ZIP salvo em: $out"
@@ -245,7 +245,7 @@ github_add_favorite() {
     return 0
   fi
 
-  printf "%s\t%s\t%s\t%s\t%s\n" "$(date '+%Y-%m-%d %H:%M:%S')" "$full" "$lang" "$stars" "$html" >> "$AGENTOS_FAVORITES_FILE"
+  printf "%s\t%s\t%s\t%s\t%s\n" "$(date '+%Y-%m-%d %H:%M:%S')" "$full" "$lang" "$stars" "$html" >>"$AGENTOS_FAVORITES_FILE"
   ui_ok "Favorito salvo: $full"
 }
 
@@ -289,7 +289,7 @@ github_export_last_search() {
     printf "AgentOS Mobile Kit - Resultado GitHub\n"
     printf "Data: %s\n\n" "$(date)"
     awk -F '\t' '{ printf "%2d. %s\n    Linguagem: %s | Stars: %s\n    %s\n    %s\n\n", NR, $1, $3, $4, $2, $6 }' "$tsv"
-  } > "$out"
+  } >"$out"
   ui_ok "Busca exportada para: $out"
 }
 
@@ -311,14 +311,35 @@ github_result_actions() {
     read -r -p "Escolha: " op
 
     case "$op" in
-      1) github_show_result_details "$index"; ui_pause ;;
-      2) github_clone_result_projects "$index"; ui_pause ;;
-      3) github_fork_result "$index"; ui_pause ;;
-      4) github_download_zip_result "$index"; ui_pause ;;
-      5) github_open_result_url "$index"; ui_pause ;;
-      6) github_add_favorite "$index"; ui_pause ;;
-      0) return 0 ;;
-      *) ui_warn "Opcao invalida."; sleep 1 ;;
+    1)
+      github_show_result_details "$index"
+      ui_pause
+      ;;
+    2)
+      github_clone_result_projects "$index"
+      ui_pause
+      ;;
+    3)
+      github_fork_result "$index"
+      ui_pause
+      ;;
+    4)
+      github_download_zip_result "$index"
+      ui_pause
+      ;;
+    5)
+      github_open_result_url "$index"
+      ui_pause
+      ;;
+    6)
+      github_add_favorite "$index"
+      ui_pause
+      ;;
+    0) return 0 ;;
+    *)
+      ui_warn "Opcao invalida."
+      sleep 1
+      ;;
     esac
   done
 }

@@ -18,61 +18,64 @@ menu_github() {
     read -r -p "Escolha: " op
 
     case "$op" in
-      1)
-        local query
-        local limit
-        query="$(ui_prompt_back "Pesquisar por area, tecnologia ou ideia")" || continue
-        limit="$(ui_prompt_back "Quantidade de resultados [$AGENTOS_DEFAULT_SEARCH_LIMIT]")" || continue
-        github_search_repositories "$query" "${limit:-$AGENTOS_DEFAULT_SEARCH_LIMIT}" && github_pick_result_actions
-        ui_pause
-        ;;
-      2)
-        github_pick_result_actions
-        ui_pause
-        ;;
-      3)
-        local index
-        index="$(ui_prompt_back "Numero do resultado para clonar")" || continue
-        github_clone_result_projects "$index"
-        ui_pause
-        ;;
-      4)
-        local index
-        index="$(ui_prompt_back "Numero do resultado para fork")" || continue
-        github_fork_result "$index"
-        ui_pause
-        ;;
-      5)
-        local index
-        index="$(ui_prompt_back "Numero do resultado para baixar ZIP")" || continue
-        github_download_zip_result "$index"
-        ui_pause
-        ;;
-      6)
-        ui_title
-        github_list_favorites
-        ui_pause
-        ;;
-      7)
-        ui_title
-        github_list_history
-        ui_pause
-        ;;
-      8)
-        ui_title
-        github_print_last_results
-        ui_pause
-        ;;
-      9)
-        if github_auth_status; then
-          gh auth status
-        else
-          github_login
-        fi
-        ui_pause
-        ;;
-      0) return 0 ;;
-      *) ui_warn "Opcao invalida."; sleep 1 ;;
+    1)
+      local query
+      local limit
+      query="$(ui_prompt_back "Pesquisar por area, tecnologia ou ideia")" || continue
+      limit="$(ui_prompt_back "Quantidade de resultados [$AGENTOS_DEFAULT_SEARCH_LIMIT]")" || continue
+      github_search_repositories "$query" "${limit:-$AGENTOS_DEFAULT_SEARCH_LIMIT}" && github_pick_result_actions
+      ui_pause
+      ;;
+    2)
+      github_pick_result_actions
+      ui_pause
+      ;;
+    3)
+      local index
+      index="$(ui_prompt_back "Numero do resultado para clonar")" || continue
+      github_clone_result_projects "$index"
+      ui_pause
+      ;;
+    4)
+      local index
+      index="$(ui_prompt_back "Numero do resultado para fork")" || continue
+      github_fork_result "$index"
+      ui_pause
+      ;;
+    5)
+      local index
+      index="$(ui_prompt_back "Numero do resultado para baixar ZIP")" || continue
+      github_download_zip_result "$index"
+      ui_pause
+      ;;
+    6)
+      ui_title
+      github_list_favorites
+      ui_pause
+      ;;
+    7)
+      ui_title
+      github_list_history
+      ui_pause
+      ;;
+    8)
+      ui_title
+      github_print_last_results
+      ui_pause
+      ;;
+    9)
+      if github_auth_status; then
+        gh auth status
+      else
+        github_login
+      fi
+      ui_pause
+      ;;
+    0) return 0 ;;
+    *)
+      ui_warn "Opcao invalida."
+      sleep 1
+      ;;
     esac
   done
 }

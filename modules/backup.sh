@@ -55,11 +55,23 @@ menu_backup() {
     read -r -p "Escolha: " op
 
     case "$op" in
-      1) backup_create; ui_pause ;;
-      2) backup_list; ui_pause ;;
-      3) backup_restore_latest; ui_pause ;;
-      0) return 0 ;;
-      *) ui_warn "Opcao invalida."; sleep 1 ;;
+    1)
+      backup_create
+      ui_pause
+      ;;
+    2)
+      backup_list
+      ui_pause
+      ;;
+    3)
+      backup_restore_latest
+      ui_pause
+      ;;
+    0) return 0 ;;
+    *)
+      ui_warn "Opcao invalida."
+      sleep 1
+      ;;
     esac
   done
 }

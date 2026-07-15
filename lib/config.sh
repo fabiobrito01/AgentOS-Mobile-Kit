@@ -110,7 +110,7 @@ agentos_public_dirs_report() {
 
 agentos_write_user_config() {
   mkdir -p "$AGENTOS_HOME/configs"
-  cat > "$AGENTOS_CONFIG_FILE" <<EOF
+  cat >"$AGENTOS_CONFIG_FILE" <<EOF
 AGENTOS_PROJECTS_DIR="$AGENTOS_PROJECTS_DIR"
 AGENTOS_GITHUB_DIR="$AGENTOS_GITHUB_DIR"
 AGENTOS_BACKUP_DIR="$AGENTOS_BACKUP_DIR"
@@ -127,5 +127,5 @@ EOF
 
 agentos_log() {
   mkdir -p "$AGENTOS_LOG_DIR"
-  printf "%s | %s\n" "$(date '+%Y-%m-%d %H:%M:%S')" "$*" >> "$AGENTOS_LOG_DIR/agentos.log"
+  printf "%s | %s\n" "$(date '+%Y-%m-%d %H:%M:%S')" "$*" >>"$AGENTOS_LOG_DIR/agentos.log"
 }
