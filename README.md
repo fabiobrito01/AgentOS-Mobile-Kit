@@ -1,12 +1,12 @@
 <p align="center">
-  <img src="assets/brand/agentos_logo.png" alt="AgentOS" width="360">
+  <a href="docs/MANUAL_USUARIO.md">
+    <img src="assets/brand/agentos-mobile-banner.svg" alt="AgentOS Mobile Kit — clique para abrir o manual" width="100%">
+  </a>
 </p>
 
 <h1 align="center">AgentOS Mobile Kit</h1>
 
-<p align="center">
-  Uma central profissional para transformar o Termux em ambiente de trabalho, GitHub, automacao e desenvolvimento direto no celular.
-</p>
+<p align="center">Uma central profissional para transformar o Termux em ambiente de trabalho, GitHub, automação e desenvolvimento direto no celular. <strong>Clique no banner para abrir o manual.</strong></p>
 
 <p align="center">
   <a href="LICENSE"><img alt="License" src="https://img.shields.io/badge/license-Apache--2.0-blue"></a>
