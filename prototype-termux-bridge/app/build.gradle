@@ -7,7 +7,7 @@ android {
     compileSdk 35
 
     defaultConfig {
-        applicationId 'br.com.agentostudio.mobiletermux'
+        applicationId 'br.com.agentostudio.mobileagent'
         minSdk 23
         targetSdk 28
         versionCode 2
