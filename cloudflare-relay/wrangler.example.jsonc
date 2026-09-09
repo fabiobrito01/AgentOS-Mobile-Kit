@@ -1,0 +1,16 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "agentomobile-relay",
+  "main": "src/index.js",
+  "compatibility_date": "2026-09-09",
+  "compatibility_flags": ["nodejs_compat"],
+  "kv_namespaces": [
+    {
+      "binding": "RELAY_KV",
+      "id": "COLOQUE_AQUI_O_ID_DO_KV"
+    }
+  ],
+  "vars": {
+    "DEFAULT_DEVICE_ID": "fabio-phone"
+  }
+}
