@@ -1,10 +1,11 @@
-name: Build AgentO Mobile Connector v0.3
+name: Build AgentO Mobile Relay v0.4
 
 on:
   pull_request:
     branches: [main]
     paths:
       - 'prototype-termux-bridge/**'
+      - 'cloudflare-relay/**'
       - '.github/workflows/build-termux-bridge-prototype.yml'
   workflow_dispatch:
 
@@ -13,6 +14,16 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Check Cloudflare relay
+        working-directory: cloudflare-relay
+        run: |
+          npm install --no-audit --no-fund
+          npm run check
+
       - uses: actions/setup-java@v4
         with:
           distribution: temurin
@@ -31,10 +42,10 @@ jobs:
       - name: Prepare artifact
         run: |
           mkdir -p dist
-          cp prototype-termux-bridge/app/build/outputs/apk/debug/app-debug.apk dist/AgentO_Mobile_Connector_v0.3.0_DEBUG.apk
-          sha256sum dist/AgentO_Mobile_Connector_v0.3.0_DEBUG.apk > dist/SHA256.txt
+          cp prototype-termux-bridge/app/build/outputs/apk/debug/app-debug.apk dist/AgentO_Mobile_Relay_v0.4.0_DEBUG.apk
+          sha256sum dist/AgentO_Mobile_Relay_v0.4.0_DEBUG.apk > dist/SHA256.txt
       - uses: actions/upload-artifact@v4
         with:
-          name: AgentO_Mobile_Connector_v0.3.0_DEBUG
+          name: AgentO_Mobile_Relay_v0.4.0_DEBUG
           path: dist/*
           if-no-files-found: error
