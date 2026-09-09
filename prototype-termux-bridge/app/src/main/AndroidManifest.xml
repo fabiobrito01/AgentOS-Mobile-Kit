@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
     <uses-permission android:name="com.termux.permission.RUN_COMMAND" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
 
     <application
         android:allowBackup="false"
-        android:label="AgentO Mobile Connector"
+        android:label="AgentO Mobile Relay"
         android:supportsRtl="true"
+        android:usesCleartextTraffic="false"
         android:theme="@android:style/Theme.Material.Light.NoActionBar">
 
         <activity
@@ -33,5 +36,6 @@
         </activity>
 
         <service android:name=".PluginResultsService" android:exported="false" />
+        <service android:name=".RelayService" android:exported="false" />
     </application>
 </manifest>
