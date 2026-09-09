@@ -13,15 +13,12 @@ public class PluginResultsService extends IntentService {
     public static final String EXTRA_STDERR = "stderr";
     public static final String EXTRA_EXIT_CODE = "exit_code";
     public static final String EXTRA_ERR = "err";
-    private static int executionId = 2000;
+    private static int executionId = 4000;
 
-    public PluginResultsService() {
-        super("AgentOTermuxResults");
-    }
+    public PluginResultsService() { super("AgentOTermuxResults"); }
 
     @Override protected void onHandleIntent(Intent intent) {
         if (intent == null) return;
-
         String purpose = intent.getStringExtra(EXTRA_PURPOSE);
         Bundle result = intent.getBundleExtra("result");
         String stdout = "";
@@ -39,9 +36,20 @@ public class PluginResultsService extends IntentService {
         } else {
             stderr = "O Termux retornou sem o bundle de resultado.";
         }
+        if (!errmsg.isEmpty()) stderr = stderr.isEmpty() ? errmsg : stderr + "\n" + errmsg;
 
-        if (!errmsg.isEmpty()) {
-            stderr = stderr.isEmpty() ? errmsg : stderr + "\n" + errmsg;
+        if (purpose != null && purpose.startsWith("relay|")) {
+            String[] parts = purpose.split("\\|", 3);
+            if (parts.length == 3) {
+                try {
+                    RelayHttp.postResult(this, parts[1], parts[2], exitCode == 0 ? "completed" : "error",
+                            stdout, stderr, exitCode);
+                } catch (Exception postError) {
+                    stderr = stderr + (stderr.isEmpty() ? "" : "\n") + "Falha ao devolver resultado ao relay: " + postError.getMessage();
+                } finally {
+                    RelayHttp.clearPending(this);
+                }
+            }
         }
 
         int id = intent.getIntExtra(EXTRA_EXECUTION_ID, 0);
@@ -62,7 +70,5 @@ public class PluginResultsService extends IntentService {
         sendBroadcast(broadcast);
     }
 
-    public static synchronized int getNextExecutionId() {
-        return executionId++;
-    }
+    public static synchronized int getNextExecutionId() { return executionId++; }
 }
