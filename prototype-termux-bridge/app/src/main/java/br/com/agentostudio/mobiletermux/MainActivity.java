@@ -383,12 +383,12 @@ public class MainActivity extends Activity {
             return "if command -v termux-battery-status >/dev/null 2>&1; then termux-battery-status; else echo 'termux-battery-status não encontrado'; exit 2; fi";
         }
         if ("device".equals(action)) {
-            return "echo '{'; " +
-                    "printf '  \\"manufacturer\\": \\"%s\\",\\n' \"$(getprop ro.product.manufacturer | tr -d '\"')\"; " +
-                    "printf '  \\"model\\": \\"%s\\",\\n' \"$(getprop ro.product.model | tr -d '\"')\"; " +
-                    "printf '  \\"android\\": \\"%s\\",\\n' \"$(getprop ro.build.version.release | tr -d '\"')\"; " +
-                    "printf '  \\"sdk\\": \\"%s\\",\\n' \"$(getprop ro.build.version.sdk | tr -d '\"')\"; " +
-                    "printf '  \\"abi\\": \\"%s\\"\\n' \"$(getprop ro.product.cpu.abi | tr -d '\"')\"; echo '}'";
+            return "echo '=== DISPOSITIVO ==='; " +
+                    "echo 'manufacturer:'; getprop ro.product.manufacturer; " +
+                    "echo 'model:'; getprop ro.product.model; " +
+                    "echo 'android:'; getprop ro.build.version.release; " +
+                    "echo 'sdk:'; getprop ro.build.version.sdk; " +
+                    "echo 'abi:'; getprop ro.product.cpu.abi";
         }
         if ("storage".equals(action)) {
             return "echo '=== ARMAZENAMENTO ==='; df -h \"$HOME\" /storage/emulated/0 2>/dev/null || df -h";
