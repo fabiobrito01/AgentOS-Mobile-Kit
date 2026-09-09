@@ -1,0 +1,22 @@
+plugins {
+    id 'com.android.application'
+}
+
+android {
+    namespace 'br.com.agentostudio.mobiletermux'
+    compileSdk 35
+
+    defaultConfig {
+        applicationId 'br.com.agentostudio.mobilerelay'
+        minSdk 23
+        targetSdk 28
+        versionCode 4
+        versionName '0.4.0'
+    }
+
+    buildTypes {
+        debug {
+            debuggable true
+        }
+    }
+}
